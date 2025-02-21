@@ -51,19 +51,34 @@ public class CarController {
         public void actionPerformed(ActionEvent e) {
             for (Vehicle car : cars) {
                 car.move();
-                int x = (int) Math.round(car.getX());
-                int y = (int) Math.round(car.getY());
-                if(x < 0 || x > 800 || y < 0 || y > 320){
+                double x =  car.getX();
+                double y =  car.getY();
+                if(outOfBounds(x, y)){
                     car.stopEngine();
                     car.turnLeft();
                     car.turnLeft();
                     car.startEngine();
+                    System.out.print(car.getDirection());
+
                 }
-                frame.drawPanel.moveit( (int) Math.round(car.getX()), (int) Math.round(car.getY()));
+                 /*           for (ACar car : cars) {
+                car.move();
+                int x = (int) Math.round(car.getPosition().getX());
+                int y = (int) Math.round(car.getPosition().getY());
+                frame.drawPanel.moveit(x, y);
+                // repaint() calls the paintComponent method of the panel
+                frame.drawPanel.repaint();
+            }*/
+                frame.drawPanel.moveit((int)x, (int) y);
+                //frame.drawPanel.moveit( (int) Math.round(car.getX()), (int) Math.round(car.getY()));
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
         }
+    }
+
+    private boolean outOfBounds(double x, double y){
+        return x < 0 || x > 800 || y < 0 || y > 300 ;
     }
 
     // Calls the gas method for each car once
