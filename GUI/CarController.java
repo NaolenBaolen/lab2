@@ -36,9 +36,21 @@ public class CarController {
         // Instance of this class
         CarController cc = new CarController();
 
-        cc.cars.add(new Volvo240());
-        cc.cars.add(new Saab95());
-        cc.cars.add(new ScaniaV2());
+        Vehicle volvo = new Volvo240();
+        volvo.setX(0);
+        volvo.setY(0);
+
+        Vehicle saab = new Saab95();
+        saab.setX(0);
+        saab.setY(100);
+
+        Vehicle scania = new ScaniaV2();
+        scania.setX(0);
+        scania.setY(200);
+
+        cc.cars.add(volvo);
+        cc.cars.add(saab);
+        cc.cars.add(scania);
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
 
@@ -61,8 +73,8 @@ public class CarController {
                 }
                 frame.drawPanel.moveit(i, (int) Math.round(car.getX()), (int) Math.round(car.getY()));
                 // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
             }
+            frame.drawPanel.repaint();
         }
     }
     private void collisionHandling (Vehicle vehicle){
