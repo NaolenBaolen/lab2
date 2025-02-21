@@ -3,6 +3,7 @@ package GUI;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -11,17 +12,22 @@ import javax.swing.*;
 public class DrawPanel extends JPanel{
 
     // Just a single image, TODO: Generalize
-    BufferedImage volvoImage;
+    private ArrayList<BufferedImage> carImg = new ArrayList<>();   //Storing the images
+    private ArrayList<Point> carPos = new ArrayList<>();            //assigning positions
+    //BufferedImage volvoImage;
     // To keep track of a single car's position
-    Point volvoPoint = new Point();
+    //Point volvoPoint = new Point();
 
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(300,300);
 
     // TODO: Make this general for all cars
-    void moveit(int x, int y){
-        volvoPoint.x = x;
-        volvoPoint.y = y;
+    void moveit(int i, int x, int y){
+        if ( i >= 0 && i < carPos.size()){
+            Point current = carPos.get(i);
+            current.x = x;
+            current.y = y;
+        }
     }
 
     // Initializes the panel and reads the images
@@ -30,20 +36,25 @@ public class DrawPanel extends JPanel{
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
         // Print an error message in case file is not found with a try/catch block
-        try {
-            // You can remove the "GUI.pics" part if running outside of IntelliJ and
-            // everything is in the same main folder.
-            // volvoImage = ImageIO.read(new File("Volvo240.jpg"));
+        addCarIMG();
+        addPos();
 
-            // Rememember to rightclick src New -> Package -> name: GUI.pics -> MOVE *.jpg to GUI.pics.
-            // if you are starting in IntelliJ.
-            volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
+    }
+    private void addCarIMG(){
+        try {
+            carImg.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")));
+            carImg.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg")));
+            carImg.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg")));
             volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
 
+    private void addPos(){
+        carPos.add(new Point(0, 0));
+        carPos.add(new Point(0, 100));
+        carPos.add(new Point(0, 200));
     }
 
     // This method is called each time the panel updates/refreshes/repaints itself
@@ -51,7 +62,11 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(volvoImage, volvoPoint.x, volvoPoint.y, null); // see javadoc for more info on the parameters
-        g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
+        for (int i = 0; i < carImg.size(); i++){
+            g.drawImage(carImg.get(i), carPos.get(i).x, carPos.get(i).y, null); // see javadoc for more info on the parameters
+            g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
+        }
+
+
     }
 }
