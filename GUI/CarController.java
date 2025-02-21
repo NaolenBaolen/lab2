@@ -1,11 +1,9 @@
 package GUI;
 
-import Vehicles.Saab95;
-import Vehicles.ScaniaV2;
-import Vehicles.Vehicle;
-import Vehicles.Volvo240;
+import Vehicles.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -19,6 +17,11 @@ import java.util.Vector;
 
 public class CarController {
     // member fields:
+    private static Vehicle volvo = new Volvo240();
+    private static Vehicle saab = new Saab95();
+    private static Vehicle scania = new ScaniaV2();
+    private static  CarMechanic volvoShop = new Volvo240Mechanic();
+
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
@@ -36,15 +39,12 @@ public class CarController {
         // Instance of this class
         CarController cc = new CarController();
 
-        Vehicle volvo = new Volvo240();
         volvo.setX(0);
         volvo.setY(0);
 
-        Vehicle saab = new Saab95();
         saab.setX(0);
         saab.setY(100);
 
-        Vehicle scania = new ScaniaV2();
         scania.setX(0);
         scania.setY(200);
 
@@ -63,11 +63,15 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+
             for(int i = 0; i < cars.size(); i++) {
                 Vehicle car = cars.get(i);
                 car.move();
                 int x = (int) Math.round(car.getX());
                 int y = (int) Math.round(car.getY());
+
+                workshopCollision(car);          //den laddar volvon. Men den repaintar volvo om o om igen...
+
                 if (outOfBounds(x, y)) {
                     collisionHandling(car);
                 }
@@ -77,6 +81,26 @@ public class CarController {
             frame.drawPanel.repaint();
         }
     }
+    //kollar om vehicle är instance of volvo, och i så fall kollar volvos position mot workshops
+    private void workshopCollision (Vehicle vehicle){
+        if(vehicle instanceof Volvo240){
+            Point workshopPos = frame.drawPanel.volvoWorkshopPoint;
+            Point vehiclePos = new Point((int) vehicle.getX(), (int) vehicle.getY());
+
+            if(isColliding(vehiclePos, workshopPos)){
+                volvoShop.load(vehicle);
+                vehicle.setX(workshopPos.x);
+                vehicle.setY(workshopPos.y);
+                System.out.print("Volvo240 loaded");
+            }
+        }
+    }
+    //bestämmer när de klassas som collision
+    private boolean isColliding(Point vehiclePos, Point workshopPos){
+        int minDist = 50;
+        return vehiclePos.distance(workshopPos) < minDist;
+    }
+
     private void collisionHandling (Vehicle vehicle){
         vehicle.stopEngine();
         vehicle.turnLeft();
@@ -89,57 +113,13 @@ public class CarController {
         return x < 0 || x > 800 || y < 0 || y > 500 ;
     }
 
-    // Calls the gas method for each car once
-    void gas(int amount) {
-        double gas = ((double) amount) / 100;
-        for (Vehicle car : cars) {
-            car.gas(gas);
-        }
-    }
-
-    void brake(int amount){
-        double brake = ((double) amount) / 100;
-        for (Vehicle car : cars){
-            car.brake(brake);
-        }
-    }
-
-    void turboOn(){
-        for (Vehicle car : cars){
-            if(car instanceof Saab95){
-                ((Saab95)car).setTurboOn();
-            }
-        }
-    }
-    void turboOff(){
-        for (Vehicle car : cars){
-            if (car instanceof Saab95){
-                ((Saab95) car).setTurboOff();
-            }
-        }
-    }
-    void liftBed(){
-        for (Vehicle car : cars){
-            if (car instanceof ScaniaV2){
-                ((ScaniaV2)car).raiseBed();
-            }
-        }
-    }
-    void lowerBed(){
-        for (Vehicle car : cars){
-            if( car instanceof ScaniaV2){
-                ((ScaniaV2)car).lowerBed();
-            }
-        }
-    }
-    void startAll(){
-        for (Vehicle car: cars){
-            car.startEngine();
-        }
-    }
-    void stopAll(){
-        for(Vehicle car: cars){
-            car.stopEngine();
-        }
-    }
+    // Call controls
+    void gas(int amount) {double gas = ((double) amount) / 100;for (Vehicle car : cars) {car.gas(gas);}}
+    void brake(int amount){double brake = ((double) amount) / 100;for (Vehicle car : cars){car.brake(brake);}}
+    void turboOn(){for (Vehicle car : cars){if(car instanceof Saab95){((Saab95)car).setTurboOn();}}}
+    void turboOff(){for (Vehicle car : cars){if (car instanceof Saab95){((Saab95) car).setTurboOff();}}}
+    void liftBed(){for (Vehicle car : cars){if (car instanceof ScaniaV2){((ScaniaV2)car).raiseBed();}}}
+    void lowerBed(){for (Vehicle car : cars){if( car instanceof ScaniaV2){((ScaniaV2)car).lowerBed();}}}
+    void startAll(){for (Vehicle car: cars){car.startEngine();}}
+    void stopAll(){for(Vehicle car: cars){car.stopEngine();}}
 }
