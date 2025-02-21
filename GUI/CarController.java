@@ -19,7 +19,6 @@ import java.util.Vector;
 
 public class CarController {
     // member fields:
-
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
@@ -56,14 +55,7 @@ public class CarController {
                 int x = (int) Math.round(car.getX());
                 int y = (int) Math.round(car.getY());
                 if(outOfBounds(x, y)){
-                    car.stopEngine();
-                    car.turnLeft();
-                    car.turnLeft();
-                    car.setX(Math.max(0, Math.min(x, 800)));
-                    car.setY(Math.max(0, Math.min(y, 200)));
-                    car.startEngine();
-                    System.out.print(car.getDirection());
-
+                   collisionHandling(car);
                 }
                 frame.drawPanel.moveit( (int) Math.round(car.getX()), (int) Math.round(car.getY()));
                 // repaint() calls the paintComponent method of the panel
@@ -71,9 +63,16 @@ public class CarController {
             }
         }
     }
-
+    private void collisionHandling (Vehicle vehicle){
+        vehicle.stopEngine();
+        vehicle.turnLeft();
+        vehicle.turnLeft();
+        vehicle.setX(Math.max(0, Math.min(vehicle.getX(), 800)));
+        vehicle.setY(Math.max(0, Math.min(vehicle.getY(), 500)));
+        vehicle.startEngine();
+    }
     private boolean outOfBounds(double x, double y){
-        return x < 0 || x > 800 || y < 0 || y > 300 ;
+        return x < 0 || x > 800 || y < 0 || y > 500 ;
     }
 
     // Calls the gas method for each car once
