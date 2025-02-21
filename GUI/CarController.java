@@ -53,8 +53,8 @@ public class CarController {
         public void actionPerformed(ActionEvent e) {
             for (Vehicle car : cars) {
                 car.move();
-                double x =  car.getX();
-                double y =  car.getY();
+                int x = (int) Math.round(car.getX());
+                int y = (int) Math.round(car.getY());
                 if(outOfBounds(x, y)){
                     car.stopEngine();
                     car.turnLeft();
