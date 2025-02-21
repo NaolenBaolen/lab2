@@ -1,7 +1,9 @@
 package GUI;
 
-import Vehicles.*;
-
+import Vehicles.Saab95;
+import Vehicles.ScaniaV2;
+import Vehicles.Vehicle;
+import Vehicles.Volvo240;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -57,20 +59,13 @@ public class CarController {
                     car.stopEngine();
                     car.turnLeft();
                     car.turnLeft();
+                    car.setX(Math.max(0, Math.min(x, 800)));
+                    car.setY(Math.max(0, Math.min(y, 200)));
                     car.startEngine();
                     System.out.print(car.getDirection());
 
                 }
-                 /*           for (ACar car : cars) {
-                car.move();
-                int x = (int) Math.round(car.getPosition().getX());
-                int y = (int) Math.round(car.getPosition().getY());
-                frame.drawPanel.moveit(x, y);
-                // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
-            }*/
-                frame.drawPanel.moveit((int)x, (int) y);
-                //frame.drawPanel.moveit( (int) Math.round(car.getX()), (int) Math.round(car.getY()));
+                frame.drawPanel.moveit( (int) Math.round(car.getX()), (int) Math.round(car.getY()));
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
