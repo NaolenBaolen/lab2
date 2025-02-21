@@ -1,9 +1,7 @@
 package GUI;
 
-import Vehicles.Saab95;
-import Vehicles.ScaniaV2;
-import Vehicles.Vehicle;
-import Vehicles.Volvo240;
+import Vehicles.*;
+
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
