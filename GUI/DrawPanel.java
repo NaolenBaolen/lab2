@@ -53,7 +53,7 @@ public class DrawPanel extends JPanel{
 
     private void addPos(){
         carPos.add(new Point(0, 0));
-        carPos.add(new Point(0, 100));
+        carPos.add(new Point(100, 100));
         carPos.add(new Point(0, 200));
     }
 
