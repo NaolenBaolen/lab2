@@ -21,8 +21,8 @@ public class CarView extends JFrame{
 
     // The controller member
     CarController carC;
-
-    DrawPanel drawPanel = new DrawPanel(X, Y-240);
+//Ändrat utefter möjligheter på min skärm...
+    DrawPanel drawPanel = new DrawPanel(X, Y-480);
 
     JPanel controlPanel = new JPanel();
 
@@ -30,6 +30,11 @@ public class CarView extends JFrame{
     JSpinner gasSpinner = new JSpinner();
     int gasAmount = 0;
     JLabel gasLabel = new JLabel("Amount of gas");
+
+    JPanel brakePanel = new JPanel();
+    JSpinner brakeSpinner = new JSpinner();
+    int brakeAmount = 0;
+    JLabel brakeLabel = new JLabel("Amount of brake");
 
     JButton gasButton = new JButton("Gas");
     JButton brakeButton = new JButton("Brake");
@@ -68,6 +73,13 @@ public class CarView extends JFrame{
         gasSpinner.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 gasAmount = (int) ((JSpinner)e.getSource()).getValue();
+            }
+        });
+        brakeSpinner = new JSpinner(spinnerModel);
+        brakeSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                brakeAmount = (int) ((JSpinner)e.getSource()).getValue();
             }
         });
 
@@ -109,6 +121,14 @@ public class CarView extends JFrame{
                 carC.gas(gasAmount);
             }
         });
+
+        brakeButton.addActionListener(e -> carC.brake(brakeAmount));
+        turboOnButton.addActionListener(e -> carC.turboOn());
+        turboOffButton.addActionListener(e -> carC.turboOff());
+        liftBedButton.addActionListener(e -> carC.liftBed());
+        lowerBedButton.addActionListener(e -> carC.lowerBed());
+        startButton.addActionListener(e -> carC.startAll());
+        stopButton.addActionListener(e -> carC.stopAll());
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
