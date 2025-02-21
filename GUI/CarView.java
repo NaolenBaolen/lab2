@@ -22,7 +22,7 @@ public class CarView extends JFrame{
     // The controller member
     CarController carC;
 //Ändrat utefter möjligheter på min skärm...
-    DrawPanel drawPanel = new DrawPanel(X, Y-480);
+    DrawPanel drawPanel = new DrawPanel(X, Y-240);
 
     JPanel controlPanel = new JPanel();
 
@@ -64,17 +64,14 @@ public class CarView extends JFrame{
 
 
 
-        SpinnerModel spinnerModel =
-                new SpinnerNumberModel(0, //initial value
+        SpinnerModel spinnerModel = new SpinnerNumberModel(0, //initial value
                         0, //min
                         100, //max
                         1);//step
         gasSpinner = new JSpinner(spinnerModel);
         gasSpinner.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                gasAmount = (int) ((JSpinner)e.getSource()).getValue();
-            }
-        });
+            public void stateChanged(ChangeEvent e) {gasAmount =
+                    (int) ((JSpinner)e.getSource()).getValue();}});
         brakeSpinner = new JSpinner(spinnerModel);
         brakeSpinner.addChangeListener(new ChangeListener() {
             @Override
