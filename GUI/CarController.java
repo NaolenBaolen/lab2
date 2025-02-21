@@ -55,10 +55,12 @@ public class CarController {
                 car.move();
                 int x = (int) Math.round(car.getX());
                 int y = (int) Math.round(car.getY());
-                if(x < 0 || x > 800 || y < 0 || y > 320){
+                if(x < 0 || x > 800 || y < 0 || y > 200){
                     car.stopEngine();
                     car.turnLeft();
                     car.turnLeft();
+                    car.setX(Math.max(0, Math.min(x, 800)));
+                    car.setY(Math.max(0, Math.min(y, 200)));
                     car.startEngine();
                 }
                 frame.drawPanel.moveit( (int) Math.round(car.getX()), (int) Math.round(car.getY()));
