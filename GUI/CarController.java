@@ -118,8 +118,8 @@ public class CarController {
     void brake(int amount){double brake = ((double) amount) / 100;for (Vehicle car : cars){car.brake(brake);}}
     void turboOn(){for (Vehicle car : cars){if(car instanceof Saab95){((Saab95)car).setTurboOn();}}}
     void turboOff(){for (Vehicle car : cars){if (car instanceof Saab95){((Saab95) car).setTurboOff();}}}
-    void liftBed(){for (Vehicle car : cars){if (car instanceof ScaniaV2){((ScaniaV2)car).raiseBed();}}}
-    void lowerBed(){for (Vehicle car : cars){if( car instanceof ScaniaV2){((ScaniaV2)car).lowerBed();}}}
+    void liftBed(){for (Vehicle car : cars){if (car instanceof truckBed){((truckBed)car).raiseBed();}}}
+    void lowerBed(){for (Vehicle car : cars){if( car instanceof truckBed){((truckBed)car).lowerBed();}}}
     void startAll(){for (Vehicle car: cars){car.startEngine();}}
     void stopAll(){for(Vehicle car: cars){car.stopEngine();}}
 }
