@@ -1,0 +1,33 @@
+Refaktorieseringsplan
+
+1:  Konstruera ett interface carActionButtonsListner() som tar hand om alla buttons.
+    Implementera carActionButtonsListner i CarController samt utöka klassen CarView med metoderna
+    setCarAction och buttonActions som ska hantera interfacen.
+
+2:  Skapa en ny klass Collision genom att dekomponera CarController.
+    Alla relevanta metoder bör flyttas till Collision och skapa en instans av klassen i TimeListner.
+
+3:  Extrahera TimerListener och låt CarController göra en instans av den.
+
+4:  Flytta metoden outOfBounds till klassen TimerListner.
+
+5:  Dekomponera Vehicle genom att konstruera två klasser: Position och EngineAndSpeed.
+    Flytta över alla relevanta metoder från Vehicle till respektive klass samt initialisera statiska
+    variabler som hanterar instansieringen av klasserna (privat static Position position = new Position()).
+
+6:  Skapa en interface Turbo som inkluderar turboON samt turboOff. Se till att Saab95 implementerar Turbo.
+    Ändra i CarController (call controls) “instansof Saab95” till instansof Turbo.
+
+7:  Ge Vehicle en metod validAmount. Flytta if-satsen från gas och brake till metoden,
+    samt anropa metoden i gas och brake. (metoden ska vara privat void)
+
+8:  Lägg till kriterier i gas så att bilarna inte kan köra om motorn ej är på.
+
+9:  I workshopCollision ta bort if-satsen samt använd intern position(nya positions klassaen)
+    istället för att bero på DrawPanel
+
+10: Låt drawPanel ta in listan av bilarna från carControll och determinera positioner och rita ut efter det.
+    Ta bort addPoint då vi istället använder bilens position
+
+11: addCarIMG ska bero på vehicle list given av CarController. ("pics/cars.getModelname.jpg")
+
