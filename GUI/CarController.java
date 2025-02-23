@@ -17,11 +17,7 @@ import java.util.Vector;
 
 public class CarController {
     // member fields:
-    private static Vehicle volvo = new Volvo240();
-    private static Vehicle saab = new Saab95();
-    private static Vehicle scania = new ScaniaV2();
-    private static  CarMechanic volvoShop = new Volvo240Mechanic();
-
+    private static CarMechanic<Volvo240> volvoShop = new Volvo240Mechanic();
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
@@ -38,6 +34,11 @@ public class CarController {
     public static void main(String[] args) {
         // Instance of this class
         CarController cc = new CarController();
+
+        Vehicle volvo = new Volvo240();
+        Vehicle saab = new Saab95();
+        Vehicle scania = new ScaniaV2();
+
 
         volvo.setX(0);
         volvo.setY(0);
@@ -88,7 +89,7 @@ public class CarController {
             Point vehiclePos = new Point((int) vehicle.getX(), (int) vehicle.getY());
 
             if(isColliding(vehiclePos, workshopPos)){
-                volvoShop.load(vehicle);
+                volvoShop.load((Volvo240) vehicle);
                 vehicle.setX(workshopPos.x);
                 vehicle.setY(workshopPos.y);
                 System.out.print("Volvo240 loaded");
