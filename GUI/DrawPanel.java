@@ -64,9 +64,7 @@ public class DrawPanel extends JPanel{
         super.paintComponent(g);
         for (int i = 0; i < carImg.size(); i++){
             g.drawImage(carImg.get(i), carPos.get(i).x, carPos.get(i).y, null); // see javadoc for more info on the parameters
-            g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
         }
-
-
+            g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
     }
 }
