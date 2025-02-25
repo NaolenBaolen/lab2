@@ -7,7 +7,7 @@ Refaktorieseringsplan
 2:  Skapa en ny klass Collision genom att dekomponera CarController.
     Alla relevanta metoder bör flyttas till Collision och skapa en instans av klassen i TimeListner.
 
-3:  Extrahera TimerListener och låt CarController göra en instans av den.
+3. Se över accessmodifiers
 
 4:  Flytta metoden outOfBounds till klassen TimerListner.
 
@@ -26,7 +26,8 @@ Refaktorieseringsplan
 9:  I workshopCollision ta bort if-satsen samt använd intern position(nya positions klassaen)
     istället för att bero på DrawPanel
 
-10: Låt drawPanel ta in listan av bilarna från carControll och determinera positioner och rita ut efter det.
+10: Låt drawPanel ta in listan av bilarna från genom interface som implementas i carControlelr och
+    determinera positioner och rita ut efter det.
     Ta bort addPoint då vi istället använder bilens position
 
 11: addCarIMG ska bero på vehicle list given av CarController. ("pics/cars.getModelname.jpg")
