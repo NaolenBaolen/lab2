@@ -11,7 +11,7 @@ public abstract class Vehicle implements Movable {
     private final Weight weight;
 
     //position and direction
-    Position position;
+    private Position position;
 
 //    private double x;
 //    private double y;

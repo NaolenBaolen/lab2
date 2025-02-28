@@ -39,7 +39,7 @@ public class TransporterV2 extends Vehicle implements truckBed, Loadable<Vehicle
     public void unload() {
         if(canUnload()){
             Vehicle vehicle = vehicleCollection.removeLast();
-            vehicle.position.setPosition(this.position.getX() - 1,this.position.getY()); //TODO is this the best??
+            vehicle.getPosition().setPosition(this.getPosition().getX() - 1,this.getPosition().getY()); //TODO is this the best??
         } else{
             System.out.print("Unloading requirements not met.");
         }
@@ -75,12 +75,12 @@ public class TransporterV2 extends Vehicle implements truckBed, Loadable<Vehicle
 
     //TODO: Probably doesnt need to be in a helper method
     private void updatePosition(Vehicle vehicle){
-        vehicle.position.setPosition(this.position.getX(), this.position.getY());
+        vehicle.getPosition().setPosition(this.getPosition().getX(), this.getPosition().getY());
     }
 
     //loading requiremnts
     private boolean canLoad(Vehicle vehicle){
-        return (bedRaised && !full() && inRange(vehicle.position) && vehicle.getWeight() == Weight.LIGHT);
+        return (bedRaised && !full() && inRange(vehicle.getPosition()) && vehicle.getWeight() == Weight.LIGHT);
     }
 
     private boolean canUnload(){
@@ -92,7 +92,7 @@ public class TransporterV2 extends Vehicle implements truckBed, Loadable<Vehicle
     }
 
     //TODO: Make sure this works, it should
-    private boolean inRange(Position vehiclePos){return this.position.distance(vehiclePos) <= minProxi;}
+    private boolean inRange(Position vehiclePos){return this.getPosition().distance(vehiclePos) <= minProxi;}
 
 //    private boolean inProximity(Vehicle vehicle){return distToTransport(vehicle) <= minProxi;}
 
