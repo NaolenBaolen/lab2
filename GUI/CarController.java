@@ -40,14 +40,15 @@ public class CarController {
         Vehicle scania = new ScaniaV2();
 
 
-        volvo.setX(0);
-        volvo.setY(0);
+        volvo.getPosition().setPosition(0, 0);
 
-        saab.setX(0);
-        saab.setY(100);
+        saab.getPosition().setPosition(0, 100);
+//        saab.setX(0);
+//        saab.setY(100);
 
-        scania.setX(0);
-        scania.setY(200);
+        scania.getPosition().setPosition(0, 200);
+//        scania.setX(0);
+//        scania.setY(200);
 
         cc.cars.add(volvo);
         cc.cars.add(saab);
@@ -68,15 +69,18 @@ public class CarController {
             for(int i = 0; i < cars.size(); i++) {
                 Vehicle car = cars.get(i);
                 car.move();
-                int x = (int) Math.round(car.getX());
-                int y = (int) Math.round(car.getY());
+
+                //TODO: not best implementation, can probably use setPosition instead
+                int x = (int) Math.round(car.getPosition().getX());
+                int y = (int) Math.round(car.getPosition().getY());
 
                 workshopCollision(car);          //den laddar volvon. Men den repaintar volvo om o om igen...
 
                 if (outOfBounds(x, y)) {
                     collisionHandling(car);
                 }
-                frame.drawPanel.moveit(i, (int) Math.round(car.getX()), (int) Math.round(car.getY()));
+                //do better
+                frame.drawPanel.moveit(i, (int) Math.round(car.getPosition().getX()), (int) Math.round(car.getPosition().getY()));
                 // repaint() calls the paintComponent method of the panel
             }
             frame.drawPanel.repaint();
@@ -86,12 +90,11 @@ public class CarController {
     private void workshopCollision (Vehicle vehicle){
         if(vehicle instanceof Volvo240){
             Point workshopPos = frame.drawPanel.volvoWorkshopPoint;
-            Point vehiclePos = new Point((int) vehicle.getX(), (int) vehicle.getY());
+            Point vehiclePos = new Point((int) vehicle.getPosition().getX(), (int) vehicle.getPosition().getY());
 
             if(isColliding(vehiclePos, workshopPos)){
                 volvoShop.load((Volvo240) vehicle);
-                vehicle.setX(workshopPos.x);
-                vehicle.setY(workshopPos.y);
+                vehicle.getPosition().setPosition(workshopPos.x, workshopPos.y);
                 System.out.print("Volvo240 loaded");
             }
         }
@@ -106,8 +109,11 @@ public class CarController {
         vehicle.stopEngine();
         vehicle.turnLeft();
         vehicle.turnLeft();
-        vehicle.setX(Math.max(0, Math.min(vehicle.getX(), 800)));
-        vehicle.setY(Math.max(0, Math.min(vehicle.getY(), 500)));
+        //TODO HEELL NO
+        vehicle.getPosition().setPosition(Math.max(0, Math.min(vehicle.getPosition().getX(), 800)),
+                                                    Math.max(0, Math.min(vehicle.getPosition().getY(), 500)));
+//        vehicle.setX(Math.max(0, Math.min(vehicle.getX(), 800)));
+//        vehicle.setY(Math.max(0, Math.min(vehicle.getY(), 500)));
         vehicle.startEngine();
     }
     private boolean outOfBounds(double x, double y){

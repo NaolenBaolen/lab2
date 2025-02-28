@@ -11,8 +11,10 @@ public abstract class Vehicle implements Movable {
     private final Weight weight;
 
     //position and direction
-    private double x;
-    private double y;
+    Position position;
+
+//    private double x;
+//    private double y;
     private Direction direction; //direction car is facing (0 = up, 1 = right, 2 = down, 3 = left)
 
     public enum Direction {UP, DOWN, RIGHT, LEFT}
@@ -24,8 +26,10 @@ public abstract class Vehicle implements Movable {
         this.color = color;
         this.modelName = modelName;
 
-        this.x = 0; //initial position
-        this.y = 0;
+        this.position = new Position(0, 0);
+
+//        this.x = 0; //initial position
+//        this.y = 0;
         this.direction = Direction.UP;
 
         this.weight = weight;     //add a weight when creating new vehicle
@@ -92,10 +96,10 @@ public abstract class Vehicle implements Movable {
     @Override
     public void move(){
         switch(direction) {
-            case UP -> y += getCurrentSpeed();
-            case DOWN -> y -= getCurrentSpeed();
-            case LEFT -> x -= getCurrentSpeed();
-            case RIGHT -> x += getCurrentSpeed();
+            case UP -> position.move(0, getCurrentSpeed());
+            case DOWN -> position.move(0, -getCurrentSpeed());
+            case LEFT -> position.move(-getCurrentSpeed(), 0);
+            case RIGHT -> position.move(getCurrentSpeed(), 0);
         }
     }
     @Override
@@ -120,12 +124,15 @@ public abstract class Vehicle implements Movable {
 
     //Position handling
 
-    public String getPosition(){return "(" + x + ", "+ y + ")";}
+//    public String getPosition(){return "(" + x + ", "+ y + ")";}
+
+
+    public Position getPosition() {return position;}
 
     public Direction getDirection() {return direction;}
 
-    public void setX(double amount) { x = amount;}
-    public void setY(double amount) {y = amount;}
-    public double getX() {return x;}
-    public double getY() {return y;}
+//    public void setX(double amount) { x = amount;}
+//    public void setY(double amount) {y = amount;}
+//    public double getX() {return x;}
+//    public double getY() {return y;}
 }
