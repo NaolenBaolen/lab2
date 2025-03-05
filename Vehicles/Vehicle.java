@@ -77,7 +77,7 @@ public abstract class Vehicle implements Movable {
     public abstract double speedFactor();
 
     public void gas(double amount){
-        validateAmount(amount); //right now we can gas without having to start engine, maybe add engineOn ture/false
+        validateAmount(amount); // add check for if engine is on. maybe use isMoving??
         incrementSpeed(amount);
     }
 
