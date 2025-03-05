@@ -87,7 +87,7 @@ public abstract class Vehicle implements Movable {
     }
 
     private void validateAmount(double amount){
-        if (0 <= amount || amount >= 1) {
+        if (0 < amount || amount > 1) {
             throw new IllegalArgumentException("Amount has to be in range 0 -1");
         }
     }
