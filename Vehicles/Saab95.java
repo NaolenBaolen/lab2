@@ -2,7 +2,7 @@ package Vehicles;
 
 import java.awt.*;
 
-public class Saab95 extends Vehicle {
+public class Saab95 extends Vehicle implements Turbo{
 
     private boolean turboOn;
     
@@ -10,10 +10,12 @@ public class Saab95 extends Vehicle {
         super(2, 125, Color.red, "Saab95", Weight.LIGHT);
         turboOn = false;
     }
+    @Override
     public void setTurboOn(){
 	    turboOn = true;
     }
 
+    @Override
     public void setTurboOff(){
 	    turboOn = false;
     }

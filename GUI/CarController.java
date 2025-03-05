@@ -15,7 +15,7 @@ import java.util.Vector;
 * modifying the model state and the updating the view.
  */
 
-public class CarController {
+public class CarController implements CarActionButtonListner{
     // member fields:
     private static CarMechanic<Volvo240> volvoShop = new Volvo240Mechanic();
     // The delay (ms) corresponds to 20 updates a sec (hz)
@@ -54,8 +54,9 @@ public class CarController {
         cc.cars.add(saab);
         cc.cars.add(scania);
         // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
-
+        cc.frame = new CarView("CarSim 1.0");
+        cc.frame.setCarAction(cc);
+        
         // Start the timer
         cc.timer.start();
     }
@@ -121,12 +122,20 @@ public class CarController {
     }
 
     // Call controls
-    void gas(int amount) {double gas = ((double) amount) / 100;for (Vehicle car : cars) {car.gas(gas);}}
-    void brake(int amount){double brake = ((double) amount) / 100;for (Vehicle car : cars){car.brake(brake);}}
-    void turboOn(){for (Vehicle car : cars){if(car instanceof Saab95){((Saab95)car).setTurboOn();}}}
-    void turboOff(){for (Vehicle car : cars){if (car instanceof Saab95){((Saab95) car).setTurboOff();}}}
-    void liftBed(){for (Vehicle car : cars){if (car instanceof truckBed){((truckBed)car).raiseBed();}}}
-    void lowerBed(){for (Vehicle car : cars){if( car instanceof truckBed){((truckBed)car).lowerBed();}}}
-    void startAll(){for (Vehicle car: cars){car.startEngine();}}
-    void stopAll(){for(Vehicle car: cars){car.stopEngine();}}
+    @Override
+    public void gas(int amount) {double gas = ((double) amount) / 100;for (Vehicle car : cars) {car.gas(gas);}}
+    @Override
+    public void brake(int amount){double brake = ((double) amount) / 100;for (Vehicle car : cars){car.brake(brake);}}
+    @Override
+    public void turboOn(){for (Vehicle car : cars){if(car instanceof Turbo){((Turbo)car).setTurboOn();}}}
+    @Override
+    public void turboOff(){for (Vehicle car : cars){if (car instanceof Turbo){((Turbo) car).setTurboOff();}}}
+    @Override
+    public void liftBed(){for (Vehicle car : cars){if (car instanceof truckBed){((truckBed)car).raiseBed();}}}
+    @Override
+    public void lowerBed(){for (Vehicle car : cars){if( car instanceof truckBed){((truckBed)car).lowerBed();}}}
+    @Override
+    public void startAll(){for (Vehicle car: cars){car.startEngine();}}
+    @Override
+    public void stopAll(){for(Vehicle car: cars){car.stopEngine();}}
 }

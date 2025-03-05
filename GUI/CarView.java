@@ -18,9 +18,8 @@ import java.awt.event.ActionListener;
 public class CarView extends JFrame{
     private static final int X = 800;
     private static final int Y = 800;
+    private CarActionButtonListner carActions;
 
-    // The controller member
-    CarController carC;
 //Ändrat utefter möjligheter på min skärm...
     DrawPanel drawPanel = new DrawPanel(X, Y-240);
 
@@ -47,9 +46,12 @@ public class CarView extends JFrame{
     JButton stopButton = new JButton("Stop all cars");
 
     // Constructor
-    public CarView(String framename, CarController cc){
-        this.carC = cc;
+    public CarView(String framename){
         initComponents(framename);
+    }
+
+    public void setCarAction(CarActionButtonListner carActions) {
+        this.carActions = carActions;
     }
 
     // Sets everything in place and fits everything
@@ -112,20 +114,14 @@ public class CarView extends JFrame{
 
         // This actionListener is for the gas button only
         // TODO: Create more for each component as necessary
-        gasButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carC.gas(gasAmount);
-            }
-        });
-
-        brakeButton.addActionListener(e -> carC.brake(brakeAmount));
-        turboOnButton.addActionListener(e -> carC.turboOn());
-        turboOffButton.addActionListener(e -> carC.turboOff());
-        liftBedButton.addActionListener(e -> carC.liftBed());
-        lowerBedButton.addActionListener(e -> carC.lowerBed());
-        startButton.addActionListener(e -> carC.startAll());
-        stopButton.addActionListener(e -> carC.stopAll());
+        gasButton.addActionListener(e -> {if (carActions != null){carActions.gas(gasAmount);}});
+        brakeButton.addActionListener(e -> {if (carActions != null){carActions.brake(brakeAmount);}});
+        turboOnButton.addActionListener(e -> {if (carActions != null){carActions.turboOn();}});
+        turboOffButton.addActionListener(e -> {if (carActions != null){carActions.turboOff();}});
+        liftBedButton.addActionListener(e -> {if (carActions != null){carActions.liftBed();}});
+        lowerBedButton.addActionListener(e -> {if (carActions != null){carActions.lowerBed();}});
+        startButton.addActionListener(e -> {if (carActions != null){carActions.startAll();}});
+        stopButton.addActionListener(e -> {if (carActions != null){carActions.stopAll();}});
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
