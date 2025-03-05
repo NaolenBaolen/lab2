@@ -77,8 +77,13 @@ public abstract class Vehicle implements Movable {
     public abstract double speedFactor();
 
     public void gas(double amount){
-        validateAmount(amount); // add check for if engine is on. maybe use isMoving??
-        incrementSpeed(amount);
+        if (currentSpeed != 0){
+            validateAmount(amount);
+            incrementSpeed(amount);// add check for if engine is on. maybe use isMoving??
+        }
+        else{
+            throw new IllegalArgumentException("Can't gas if the cars are not started");
+        }
     }
 
     public void brake(double amount){
