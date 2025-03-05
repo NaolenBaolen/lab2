@@ -77,17 +77,19 @@ public abstract class Vehicle implements Movable {
     public abstract double speedFactor();
 
     public void gas(double amount){
-        if (amount < 0 || amount > 1 ){  //right now we can gas without having to start engine, maybe add engineOn ture/false
-            throw new IllegalArgumentException("Gas has to be in range 0 - 1!");
-        }
+        validateAmount(amount); //right now we can gas without having to start engine, maybe add engineOn ture/false
         incrementSpeed(amount);
     }
 
     public void brake(double amount){
-        if (amount < 0 || amount > 1){
-            throw new IllegalArgumentException("Brake has to be in range 0 - 1!");
-        }
+        validateAmount(amount);
         decrementSpeed(amount);
+    }
+
+    private void validateAmount(double amount){
+        if (0 <= amount || amount >= 1) {
+            throw new IllegalArgumentException("Amount has to be in range 0 -1");
+        }
     }
 
     public boolean isMoving(){ return getCurrentSpeed() > 0; }
