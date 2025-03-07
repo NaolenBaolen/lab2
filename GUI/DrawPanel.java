@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -15,21 +16,16 @@ public class DrawPanel extends JPanel{
 
     // Just a single image, TODO: Generalize
     private ArrayList<BufferedImage> carImg = new ArrayList<>();//Storing the images
-    private ListCarsInmotion listCars;
-    private ArrayList<Point> carPos = new ArrayList<>();            //assigning positions
-    //BufferedImage volvoImage;
-    // To keep track of a single car's position
-    //Point volvoPoint = new Point();
+    private ArrayList<Vehicle> listCars;
 
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(0,300);
 
     // TODO: Make this general for all cars
     void moveit( int i , int x, int y){
-        if (i >= 0 && i < carPos.size()){
-            Point current = carPos.get(i);
-            current.x = x;
-            current.y = y;
+        if (i >= 0 && i < listCars.size()){
+            listCars.get(i).getPosition().setX(x);
+            listCars.get(i).getPosition().setY(y);
         }
     }
 
@@ -38,14 +34,16 @@ public class DrawPanel extends JPanel{
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
-        // Print an error message in case file is not found with a try/catch block
-        addCarIMG();
-        addPos();
-
     }
+
+    public void setListCars(ArrayList<Vehicle> listCars){
+        this.listCars = listCars;
+        addCarIMG();
+    }
+
     private void addCarIMG(){
         try {
-            for(Vehicle car : listCars.getListCarsInmotion()){
+            for(Vehicle car : listCars){
                 carImg.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + car.getModelName() + ".jpg")));
             }
             volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
@@ -54,19 +52,14 @@ public class DrawPanel extends JPanel{
         }
     }
 
-    private void addPos(){
-        carPos.add(new Point(0, 0));
-        carPos.add(new Point(100, 100));
-        carPos.add(new Point(0, 200));
-    }
-
     // This method is called each time the panel updates/refreshes/repaints itself
     // TODO: Change to suit your needs.
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (int i = 0; i < carImg.size(); i++){
-            g.drawImage(carImg.get(i), carPos.get(i).x, carPos.get(i).y, null); // see javadoc for more info on the parameters
+            Vehicle car = listCars.get(i);
+            g.drawImage(carImg.get(i), (int) car.getPosition().getX(), (int) car.getPosition().getY(), null); // see javadoc for more info on the parameters
         }
             g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
     }

@@ -27,7 +27,7 @@ public class CarController implements CarActionButtonListner{
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    ListCarsInmotion listCars;
+    CarFactery listCars;
 
     //methods:
 
@@ -35,28 +35,28 @@ public class CarController implements CarActionButtonListner{
         // Instance of this class
         CarController cc = new CarController();
         cc.listCars = new CarFactery();
-        Vehicle volvo = new Volvo240();
-        Vehicle saab = new Saab95();
-        Vehicle scania = new ScaniaV2();
+        //cc.listCars.createVolvo();
+        cc.listCars.createSaab();
+        cc.listCars.createScania();
 
+//        volvo.getPosition().setPosition(0, 0);
 
-        volvo.getPosition().setPosition(0, 0);
-
-        saab.getPosition().setPosition(0, 100);
+//        saab.getPosition().setPosition(0, 100);
 //        saab.setX(0);
 //        saab.setY(100);
 
-        scania.getPosition().setPosition(0, 200);
+//        scania.getPosition().setPosition(0, 200);
 //        scania.setX(0);
 //        scania.setY(200);
 
-        cc.listCars.addVehicle(volvo);
-        cc.listCars.addVehicle(saab);
-        cc.listCars.addVehicle(scania);
+//        cc.listCars.addVehicle(volvo);
+//        cc.listCars.addVehicle(saab);
+//        cc.listCars.addVehicle(scania);
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0");
         cc.frame.setCarAction(cc);
-        
+
+        cc.frame.drawPanel.setListCars(cc.listCars.getListCarsInmotion());
         // Start the timer
         cc.timer.start();
     }
@@ -87,7 +87,7 @@ public class CarController implements CarActionButtonListner{
             frame.drawPanel.repaint();
         }
         private boolean outOfBounds(double x, double y){
-            return x < 0 || x > 800 || y < 0 || y > 500 ;
+            return x < 0 || x > 800 || y < 0 || y > 499 ;
         }
     }
     //kollar om vehicle är instance of volvo, och i så fall kollar volvos position mot workshops
@@ -115,7 +115,7 @@ public class CarController implements CarActionButtonListner{
         vehicle.turnLeft();
         //TODO HEELL NO
         vehicle.getPosition().setPosition(Math.max(0, Math.min(vehicle.getPosition().getX(), 800)),
-                                                    Math.max(0, Math.min(vehicle.getPosition().getY(), 500)));
+                                                    Math.max(0, Math.min(vehicle.getPosition().getY(), 499)));
 //        vehicle.setX(Math.max(0, Math.min(vehicle.getX(), 800)));
 //        vehicle.setY(Math.max(0, Math.min(vehicle.getY(), 500)));
         vehicle.startEngine();

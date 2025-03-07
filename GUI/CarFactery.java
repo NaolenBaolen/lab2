@@ -1,15 +1,18 @@
 package GUI;
 
+import Vehicles.Saab95;
+import Vehicles.ScaniaV2;
 import Vehicles.Vehicle;
+import Vehicles.Volvo240;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CarFactery implements ListCarsInmotion{
-    private final List<Vehicle> vehicles = new ArrayList<>();
+    private final ArrayList<Vehicle> vehicles = new ArrayList<>();
 
     @Override
-    public List<Vehicle> getListCarsInmotion(){
+    public ArrayList<Vehicle> getListCarsInmotion(){
         return vehicles;
     }
 
@@ -21,5 +24,24 @@ public class CarFactery implements ListCarsInmotion{
     @Override
     public void removeVehicle(Vehicle vehicle){
         vehicles.remove(vehicle);
+    }
+
+    //Factory methods for creating different vehicles
+
+    public void createVolvo(){
+        Vehicle volvo = new Volvo240();
+        vehicles.add(volvo);
+    }
+
+    public Vehicle createSaab(){
+        Vehicle saab = new Saab95();
+        vehicles.add(saab);
+        return saab;
+    }
+
+    public Vehicle createScania(){
+        Vehicle scania = new ScaniaV2();
+        vehicles.add(scania);
+        return scania;
     }
 }
