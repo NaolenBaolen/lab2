@@ -47,7 +47,7 @@ public abstract class Vehicle implements Movable {
 
     public void setColor(Color clr){this.color = clr;}
 
-    public void startEngine(){ currentSpeed = 0.5;}
+    public void startEngine(){ currentSpeed = 1;}
 
     public void stopEngine(){currentSpeed = 0;}
 

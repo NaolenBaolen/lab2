@@ -39,19 +39,6 @@ public class CarController implements CarActionButtonListner{
         cc.listCars.createSaab();
         cc.listCars.createScania();
 
-//        volvo.getPosition().setPosition(0, 0);
-
-//        saab.getPosition().setPosition(0, 100);
-//        saab.setX(0);
-//        saab.setY(100);
-
-//        scania.getPosition().setPosition(0, 200);
-//        scania.setX(0);
-//        scania.setY(200);
-
-//        cc.listCars.addVehicle(volvo);
-//        cc.listCars.addVehicle(saab);
-//        cc.listCars.addVehicle(scania);
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0");
         cc.frame.setCarAction(cc);
@@ -116,9 +103,9 @@ public class CarController implements CarActionButtonListner{
         //TODO HEELL NO
         vehicle.getPosition().setPosition(Math.max(0, Math.min(vehicle.getPosition().getX(), 800)),
                                                     Math.max(0, Math.min(vehicle.getPosition().getY(), 499)));
-//        vehicle.setX(Math.max(0, Math.min(vehicle.getX(), 800)));
-//        vehicle.setY(Math.max(0, Math.min(vehicle.getY(), 500)));
+
         vehicle.startEngine();
+        System.out.print(vehicle.getDirection());
     }
 
     // Call controls
