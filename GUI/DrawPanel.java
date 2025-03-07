@@ -21,14 +21,6 @@ public class DrawPanel extends JPanel{
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(0,300);
 
-    // TODO: Make this general for all cars
-    void moveit( int i , int x, int y){
-        if (i >= 0 && i < listCars.size()){
-            listCars.get(i).getPosition().setX(x);
-            listCars.get(i).getPosition().setY(y);
-        }
-    }
-
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y) {
         this.setDoubleBuffered(true);
