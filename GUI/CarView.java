@@ -75,6 +75,17 @@ public class CarView extends JFrame{
         drawPanel = new DrawPanel(X,Y -240);
         this.add(drawPanel);
 
+        //Gas panel
+        gasLabel = new JLabel("Gas/brake amount");
+        SpinnerModel spinnerModel = new SpinnerNumberModel(0, 0, 100 , 1);
+        gasBrakeSpinner = new JSpinner(spinnerModel); //TODO maybe add these in setup control instead... changes layout though
+
+        gasPanel = new JPanel(new BorderLayout());
+        gasPanel.add(gasLabel, BorderLayout.PAGE_START);
+        gasPanel.add(gasBrakeSpinner, BorderLayout.PAGE_END);
+        this.add(gasPanel);
+
+        //Control panel
         controlPanel = new JPanel(new GridLayout(2, 4));
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         controlPanel.setBackground(Color.CYAN);
@@ -82,14 +93,6 @@ public class CarView extends JFrame{
     }
 
     private void setupControls(){
-        //Setup spinner
-        SpinnerModel spinnerModel = new SpinnerNumberModel(0, 0, 100 , 1);
-        gasBrakeSpinner = new JSpinner(spinnerModel);
-
-        //Labels
-        gasLabel = new JLabel("Gas/brake amount");
-        //brakeLabel = new JLabel("Amount of brake");
-
         //Buttons
         gasButton = new JButton("Gas");
         brakeButton = new JButton("Brake");
@@ -99,12 +102,6 @@ public class CarView extends JFrame{
         lowerBedButton = new JButton("Lower bed");
         startButton = new JButton("Start all cars");
         stopButton = new JButton("Stop all cars");
-
-        //Gas panel
-        gasPanel = new JPanel(new BorderLayout());
-        gasPanel.add(gasLabel, BorderLayout.PAGE_START);
-        gasPanel.add(gasBrakeSpinner, BorderLayout.PAGE_END);
-        this.add(gasPanel);
 
         //add buttons to control panel
         controlPanel.add(gasButton,0);
@@ -117,12 +114,12 @@ public class CarView extends JFrame{
         //Start and stop buttons
         startButton.setBackground(Color.blue);
         startButton.setForeground(Color.green);
-        startButton.setPreferredSize(new Dimension(X/5-15,200));
+        startButton.setPreferredSize(new Dimension(X/5-23,200));
         this.add(startButton);
 
         stopButton.setBackground(Color.red);
         stopButton.setForeground(Color.black);
-        stopButton.setPreferredSize(new Dimension(X/5-15,200));
+        stopButton.setPreferredSize(new Dimension(X/5-23,200));
         this.add(stopButton);
     }
 
