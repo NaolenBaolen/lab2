@@ -1,7 +1,5 @@
 package GUI;
 
-import Vehicles.Vehicle;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -14,8 +12,7 @@ import javax.swing.*;
 public class DrawPanel extends JPanel{
 
     // Just a single image, TODO: Generalize
-    private ArrayList<BufferedImage> carImg = new ArrayList<>();//Storing the images
-    private ListCarsInmotion listCars;
+    private ArrayList<BufferedImage> carImg = new ArrayList<>();   //Storing the images
     private ArrayList<Point> carPos = new ArrayList<>();            //assigning positions
     //BufferedImage volvoImage;
     // To keep track of a single car's position
@@ -45,9 +42,9 @@ public class DrawPanel extends JPanel{
     }
     private void addCarIMG(){
         try {
-            for(Vehicle car : listCars.getListCarsInmotion()){
-                carImg.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + car.getModelName() + ".jpg")));
-            }
+            carImg.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg")));
+            carImg.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg")));
+            carImg.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg")));
             volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
         } catch (IOException ex) {
             ex.printStackTrace();
