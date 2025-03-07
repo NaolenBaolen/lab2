@@ -25,17 +25,17 @@ public class CarView extends JFrame{
     DrawPanel drawPanel;
     private JPanel controlPanel;
     private JPanel gasPanel;
-    private JPanel brakePanel;
+    //private JPanel brakePanel;
 
     //Labels
     private JLabel gasLabel;
-    private JLabel brakeLabel;
+    //private JLabel brakeLabel;
 
     //Spinners
-    private JSpinner gasSpinner;
-    private JSpinner brakeSpinner;
-    private int gasAmount = 0;
-    private int brakeAmount = 0;
+    private JSpinner gasBrakeSpinner;
+    //private JSpinner brakeSpinner;
+    private int gasBrakeAmount = 0;
+    //private int brakeAmount = 0;
 
     //Buttons
     private JButton gasButton;
@@ -84,12 +84,11 @@ public class CarView extends JFrame{
     private void setupControls(){
         //Setup spinner
         SpinnerModel spinnerModel = new SpinnerNumberModel(0, 0, 100 , 1);
-        gasSpinner = new JSpinner(spinnerModel);
-        brakeSpinner = new JSpinner(spinnerModel);
+        gasBrakeSpinner = new JSpinner(spinnerModel);
 
         //Labels
-        gasLabel = new JLabel("Amount of gas");
-        brakeLabel = new JLabel("Amount of brake");
+        gasLabel = new JLabel("Gas/brake amount");
+        //brakeLabel = new JLabel("Amount of brake");
 
         //Buttons
         gasButton = new JButton("Gas");
@@ -104,22 +103,16 @@ public class CarView extends JFrame{
         //Gas panel
         gasPanel = new JPanel(new BorderLayout());
         gasPanel.add(gasLabel, BorderLayout.PAGE_START);
-        gasPanel.add(gasSpinner, BorderLayout.PAGE_END);
+        gasPanel.add(gasBrakeSpinner, BorderLayout.PAGE_END);
         this.add(gasPanel);
 
-        //Brake panel
-        brakePanel = new JPanel(new BorderLayout());
-        brakePanel.add(brakeLabel,BorderLayout.PAGE_START);
-        brakePanel.add(brakeSpinner, BorderLayout.PAGE_END);
-        this.add(brakePanel);
-
         //add buttons to control panel
-        controlPanel.add(gasButton);
-        controlPanel.add(turboOnButton);
-        controlPanel.add(liftBedButton);
-        controlPanel.add(brakeButton);
-        controlPanel.add(turboOffButton);
-        controlPanel.add(lowerBedButton);
+        controlPanel.add(gasButton,0);
+        controlPanel.add(turboOnButton,1);
+        controlPanel.add(liftBedButton,2);
+        controlPanel.add(brakeButton,3);
+        controlPanel.add(turboOffButton,4);
+        controlPanel.add(lowerBedButton,5);
 
         //Start and stop buttons
         startButton.setBackground(Color.blue);
@@ -135,12 +128,11 @@ public class CarView extends JFrame{
 
     private void setupEventListeners(){
         //Spinner listeners
-        gasSpinner.addChangeListener(e -> gasAmount = (int) ((JSpinner) e.getSource()).getValue());
-        brakeSpinner.addChangeListener(e -> brakeAmount = (int) ((JSpinner) e.getSource()).getValue());
+        gasBrakeSpinner.addChangeListener(e -> gasBrakeAmount = (int) ((JSpinner) e.getSource()).getValue());
 
         //button listeners
-        gasButton.addActionListener(e -> {if (carActions != null){carActions.gas(gasAmount);}});
-        brakeButton.addActionListener(e -> {if (carActions != null){carActions.brake(brakeAmount);}});
+        gasButton.addActionListener(e -> {if (carActions != null){carActions.gas(gasBrakeAmount);}});
+        brakeButton.addActionListener(e -> {if (carActions != null){carActions.brake(gasBrakeAmount);}});
         turboOnButton.addActionListener(e -> {if (carActions != null){carActions.turboOn();}});
         turboOffButton.addActionListener(e -> {if (carActions != null){carActions.turboOff();}});
         liftBedButton.addActionListener(e -> {if (carActions != null){carActions.liftBed();}});
