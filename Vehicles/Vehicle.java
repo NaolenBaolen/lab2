@@ -9,13 +9,8 @@ public abstract class Vehicle implements Movable {
     private Color color;
     private final String modelName;
     private final Weight weight;
-
-    //position and direction
     private Position position;
-
-//    private double x;
-//    private double y;
-    private Direction direction; //direction car is facing (0 = up, 1 = right, 2 = down, 3 = left)
+    private Direction direction;
 
     public enum Direction {UP, DOWN, RIGHT, LEFT}
     public enum Weight {LIGHT, MEDIUM, HEAVY}
@@ -25,14 +20,9 @@ public abstract class Vehicle implements Movable {
         this.enginePower = enginePower;
         this.color = color;
         this.modelName = modelName;
-
         this.position = new Position(0, 0);
-
-//        this.x = 0; //initial position
-//        this.y = 0;
         this.direction = Direction.UP;
-
-        this.weight = weight;     //add a weight when creating new vehicle
+        this.weight = weight;
 
         stopEngine();
     }
@@ -130,16 +120,8 @@ public abstract class Vehicle implements Movable {
     }
 
     //Position handling
-
-//    public String getPosition(){return "(" + x + ", "+ y + ")";}
-
-
     public Position getPosition() {return position;}
 
     public Direction getDirection() {return direction;}
 
-//    public void setX(double amount) { x = amount;}
-//    public void setY(double amount) {y = amount;}
-//    public double getX() {return x;}
-//    public double getY() {return y;}
 }
