@@ -35,7 +35,7 @@ public abstract class CarMechanic<T extends Vehicle> implements Loadable<T> {
     @Override
     public void unload() {
         if(!vehicleIn.isEmpty()){
-            Vehicle vehicle = vehicleIn.remove();
+            Vehicle vehicle = vehicleIn.poll();
         }else{
             System.out.print("No vehicles in right now.");
         }
