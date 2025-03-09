@@ -5,6 +5,7 @@ import Vehicles.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -12,7 +13,7 @@ import java.awt.event.ActionListener;
 * modifying the model state and the updating the view.
  */
 
-public class CarController implements CarActionButtonListner{
+public class CarController implements CarActionButtonListner, Observable{
 
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
@@ -26,10 +27,10 @@ public class CarController implements CarActionButtonListner{
     //Creates and handels carMechanics
     private ActiveCarMechanics listCarMechaincs;
     private CollisionHandler collisionHandler;
+    //List of observers
+    private ArrayList<Observer> observers = new ArrayList<>();
 
 
-
-    //methods:
 
     public static void main(String[] args) {
         // Instance of this class
@@ -52,6 +53,7 @@ public class CarController implements CarActionButtonListner{
         cc.collisionHandler = new CollisionHandler(cc.listCarMechaincs.getListOfCarMechanics());
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0");
+        cc.addObserver(cc.frame.drawPanel);
         cc.frame.setCarAction(cc);
         cc.frame.drawPanel.setListViewCarsAndCarMechanic(cc.listCars.getListCarsInmotion(), cc.listCarMechaincs.getListOfCarMechanics());
         // Start the timer
@@ -67,7 +69,25 @@ public class CarController implements CarActionButtonListner{
                 car.move(); //if car.getCurrentSpeed > 0 else continue; ????
                 collisionHandler.handleCollision(car);
             }
-            frame.drawPanel.repaint();
+            notifyObservers();
+        }
+    }
+
+    //observer methods:
+    @Override
+    public void addObserver(Observer observer){
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer){
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(){
+        for(Observer observer : observers){
+            observer.update();
         }
     }
 
