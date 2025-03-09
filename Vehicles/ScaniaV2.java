@@ -35,6 +35,7 @@ public class ScaniaV2 extends Vehicle implements truckBed {
         }else{
             bedAngle = Math.min(bedAngle + amount, 70);
             bedRaised = bedAngle > 0;
+            System.out.print("ready to laod");
         }
     }
 
@@ -49,10 +50,10 @@ public class ScaniaV2 extends Vehicle implements truckBed {
 
     @Override
     public void move(){
-        if(!bedRaised){
-            super.move();
-        }else{
-            System.out.print("Lower bed to move.");
+        if(bedRaised){
+          setCurrentSpeed(0);   // dunder silvertejp --------
         }
+        super.move();
     }
+
 }
