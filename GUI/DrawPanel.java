@@ -22,7 +22,7 @@ public class DrawPanel extends JPanel{
     private CarMechanic mechanic;
 
     BufferedImage volvoWorkshopImage;
-    Point volvoWorkshopPoint = new Point(0,300);
+    //Point volvoWorkshopPoint = new Point(0,300);
 
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y) {
@@ -36,8 +36,13 @@ public class DrawPanel extends JPanel{
         addCarIMG();
     }
 
-    public void setWorkshop(CarMechanic mechanic){
+    public void setWorkshop(CarMechanic mechanic){  //bara ett test för potentiell förbättring?
         this.mechanic = mechanic;
+        try{
+        volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
+        } catch (IOException ex){
+            ex.printStackTrace();
+        }
     }
 
     private void addCarIMG(){
@@ -45,14 +50,12 @@ public class DrawPanel extends JPanel{
             for(Vehicle car : listCars){
                 carImg.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + car.getModelName() + ".jpg")));
             }
-            volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
     // This method is called each time the panel updates/refreshes/repaints itself
-    // TODO: Change to suit your needs.
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -60,6 +63,6 @@ public class DrawPanel extends JPanel{
             Vehicle car = listCars.get(i);
             g.drawImage(carImg.get(i), (int) car.getPosition().getX(), (int) car.getPosition().getY(), null); // see javadoc for more info on the parameters
         }
-            g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
+            g.drawImage(volvoWorkshopImage, (int) mechanic.getPosition().getX(), (int) mechanic.getPosition().getY(), null);
     }
 }

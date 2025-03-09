@@ -6,8 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Vector;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -17,17 +15,19 @@ import java.util.Vector;
 
 public class CarController implements CarActionButtonListner{
     // member fields:
-    private static CarMechanic<Volvo240> volvoShop = new Volvo240Mechanic();
+    private static CarMechanic<Volvo240> volvoShop;
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
     private Timer timer = new Timer(delay, new TimerListener());
-
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    CarFactery listCars;
+    private CarFactery listCars;
+    private CollisionHandler collisionHandler;
+
+
 
     //methods:
 
@@ -39,10 +39,14 @@ public class CarController implements CarActionButtonListner{
         cc.listCars.createSaab();
         cc.listCars.createScania();
 
+        volvoShop = new Volvo240Mechanic();
+        volvoShop.getPosition().setPosition(0, 300);
+
+        cc.collisionHandler = new CollisionHandler(volvoShop);
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0");
         cc.frame.setCarAction(cc);
-
+        cc.frame.drawPanel.setWorkshop(volvoShop);
         cc.frame.drawPanel.setListCars(cc.listCars.getListCarsInmotion());
         // Start the timer
         cc.timer.start();
@@ -53,60 +57,17 @@ public class CarController implements CarActionButtonListner{
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-
-            for(int i = 0; i < listCars.getListCarsInmotion().size(); i++) {
-                Vehicle car = listCars.getListCarsInmotion().get(i);
-                car.move();
-
-                //TODO: not best implementation, can probably use setPosition instead
-                int x = (int) Math.round(car.getPosition().getX());
-                int y = (int) Math.round(car.getPosition().getY());
-
-                workshopCollision(car);          //den laddar volvon. Men den repaintar volvo om o om igen...
-
-                if (outOfBounds(x, y)) {
-                    collisionHandling(car);
-                }
-                // repaint() calls the paintComponent method of the panel
+            for(Vehicle car : listCars.getListCarsInmotion()) {
+                car.move(); //if car.getCurrentSpeed > 0 else continue; ????
+                collisionHandler.handleCollision(car);
             }
             frame.drawPanel.repaint();
         }
-        private boolean outOfBounds(double x, double y){
-            return x < 0 || x > 800 || y < 0 || y > 499 ;
-        }
-    }
-    //kollar om vehicle är instance of volvo, och i så fall kollar volvos position mot workshops
-    private void workshopCollision (Vehicle vehicle){
-        if(vehicle instanceof Volvo240){
-            Point workshopPos = frame.drawPanel.volvoWorkshopPoint;
-            Point vehiclePos = new Point((int) vehicle.getPosition().getX(), (int) vehicle.getPosition().getY());
-
-            if(isColliding(vehiclePos, workshopPos)){
-                volvoShop.load((Volvo240) vehicle);
-                vehicle.getPosition().setPosition(workshopPos.x, workshopPos.y);
-                System.out.print("Volvo240 loaded");
-            }
-        }
-    }
-    //bestämmer när de klassas som collision
-    private boolean isColliding(Point vehiclePos, Point workshopPos){
-        int minDist = 50;
-        return vehiclePos.distance(workshopPos) < minDist;
     }
 
-    private void collisionHandling (Vehicle vehicle){
-        vehicle.stopEngine();
-        vehicle.turnLeft();
-        vehicle.turnLeft();
-        //TODO HEELL NO
-        vehicle.getPosition().setPosition(Math.max(0, Math.min(vehicle.getPosition().getX(), 800)),
-                                                    Math.max(0, Math.min(vehicle.getPosition().getY(), 499)));
-
-        vehicle.startEngine();
-        System.out.print(vehicle.getDirection());
-    }
 
     // Call controls
+    //TODO in gas maybe if(car instance of truckBed) continue?? so we can gas all cars even if a truck has bed raised
     @Override
     public void gas(int amount) {double gas = ((double) amount) / 100;for (Vehicle car : listCars.getListCarsInmotion()) {car.gas(gas);}}
     @Override
