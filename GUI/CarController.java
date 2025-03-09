@@ -35,7 +35,7 @@ public class CarController implements CarActionButtonListner{
         // Instance of this class
         CarController cc = new CarController();
         cc.listCars = new CarFactery();
-        //cc.listCars.createVolvo();
+        cc.listCars.createVolvo();
         cc.listCars.createSaab();
         cc.listCars.createScania();
 

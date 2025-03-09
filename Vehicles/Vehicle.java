@@ -9,7 +9,7 @@ public abstract class Vehicle implements Movable {
     private Color color;
     private final String modelName;
     private final Weight weight;
-    private Position position;
+    private final Position position;
     private Direction direction;
 
     public enum Direction {UP, DOWN, RIGHT, LEFT}

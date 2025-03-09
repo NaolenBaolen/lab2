@@ -1,5 +1,6 @@
 package GUI;
 
+import Vehicles.CarMechanic;
 import Vehicles.Vehicle;
 
 import java.awt.*;
@@ -18,6 +19,8 @@ public class DrawPanel extends JPanel{
     private ArrayList<BufferedImage> carImg = new ArrayList<>();//Storing the images
     private ArrayList<Vehicle> listCars;
 
+    private CarMechanic mechanic;
+
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(0,300);
 
@@ -31,6 +34,10 @@ public class DrawPanel extends JPanel{
     public void setListCars(ArrayList<Vehicle> listCars){
         this.listCars = listCars;
         addCarIMG();
+    }
+
+    public void setWorkshop(CarMechanic mechanic){
+        this.mechanic = mechanic;
     }
 
     private void addCarIMG(){
