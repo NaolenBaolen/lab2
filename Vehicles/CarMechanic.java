@@ -6,14 +6,17 @@ public abstract class CarMechanic<T extends Vehicle> implements Loadable<T> {
     private final int maxCap;
     private LinkedList<T> vehicleIn;
     private final Position position;
+    private final String shopName;
 
-    public CarMechanic(int maxCap){
+    public CarMechanic(int maxCap, String shopName){
         this.maxCap = maxCap;
         this.vehicleIn = new LinkedList<>();
         this.position = new Position(0, 0);
+        this.shopName = shopName;
     }
 
     public Position getPosition(){return position;}
+    public String getShopName() {return shopName;}
     public int getSize(){return vehicleIn.size();}
     public boolean shopContains(T vehicle){
         return vehicleIn.contains(vehicle);

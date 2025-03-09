@@ -3,7 +3,6 @@ package GUI;
 import Vehicles.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,8 +13,7 @@ import java.awt.event.ActionListener;
  */
 
 public class CarController implements CarActionButtonListner{
-    // member fields:
-    private static CarMechanic<Volvo240> volvoShop;
+
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
@@ -25,6 +23,8 @@ public class CarController implements CarActionButtonListner{
     CarView frame;
     // A list of cars, modify if needed
     private CarFactery listCars;
+    //Creates and handels carMechanics
+    private ActiveCarMechanics listCarMechaincs;
     private CollisionHandler collisionHandler;
 
 
@@ -39,15 +39,21 @@ public class CarController implements CarActionButtonListner{
         cc.listCars.createSaab();
         cc.listCars.createScania();
 
-        volvoShop = new Volvo240Mechanic();
-        volvoShop.getPosition().setPosition(0, 300);
+        cc.listCarMechaincs = new ActiveCarMechanics();
+        cc.listCarMechaincs.createVolvoMechanic();
 
-        cc.collisionHandler = new CollisionHandler(volvoShop);
+        for(int i = 0; i < cc.listCars.getListCarsInmotion().size(); i++){
+            cc.listCars.getListCarsInmotion().get(i).getPosition().setPosition(0, i*100);
+        }
+        for(int j = 0; j < cc.listCarMechaincs.getListOfCarMechanics().size(); j++){
+            cc.listCarMechaincs.getListOfCarMechanics().get(j).getPosition().setPosition(j*100, 300);
+        }
+
+        cc.collisionHandler = new CollisionHandler(cc.listCarMechaincs.getListOfCarMechanics());
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0");
         cc.frame.setCarAction(cc);
-        cc.frame.drawPanel.setWorkshop(volvoShop);
-        cc.frame.drawPanel.setListCars(cc.listCars.getListCarsInmotion());
+        cc.frame.drawPanel.setListViewCarsAndCarMechanic(cc.listCars.getListCarsInmotion(), cc.listCarMechaincs.getListOfCarMechanics());
         // Start the timer
         cc.timer.start();
     }
@@ -64,7 +70,6 @@ public class CarController implements CarActionButtonListner{
             frame.drawPanel.repaint();
         }
     }
-
 
     // Call controls
     //TODO in gas maybe if(car instance of truckBed) continue?? so we can gas all cars even if a truck has bed raised

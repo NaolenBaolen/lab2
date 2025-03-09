@@ -2,26 +2,40 @@ package GUI;
 
 import Vehicles.*;
 
-public class CollisionHandler {
-    private CarMechanic<Volvo240> volvoShop;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
-    public CollisionHandler(CarMechanic<Volvo240> volvoShop){
-        this.volvoShop = volvoShop;
+public class CollisionHandler {
+    private ArrayList<CarMechanic> carMechanics;
+
+    public CollisionHandler(ArrayList<CarMechanic> carMechanics){
+        this.carMechanics = carMechanics;
     }
 
     //checks and takes care of collision with boarder or workshop
     public void handleCollision(Vehicle car){
-        if (car instanceof Volvo240) checkWorkshopCollision(car);
+        checkWorkshopCollision(car);
         if (isOutOfBounds(car.getPosition())) handleBorderCollision(car);
     }
 
     //Check if volvo is in proximity and loads it
     private void checkWorkshopCollision (Vehicle vehicle){
-        if(isColliding(vehicle.getPosition(), volvoShop.getPosition())){
-            volvoShop.load((Volvo240) vehicle);
-            //listCars.removeVehicle(vehicle); TODO detta fakkar upp för listan uppdateras inte i drawpanel, Observer-pattern
-            vehicle.getPosition().setPosition(volvoShop.getPosition().getX(), volvoShop.getPosition().getY()); //remove instead of locking position
-            System.out.print("Volvo240 loaded");
+        for(int i = 0; i< carMechanics.size(); i++) {
+            CarMechanic shop = carMechanics.get(i);
+            //Looks into which car types can be loaded into the different shops
+            if (shop.getClass().getGenericSuperclass() instanceof ParameterizedType) {
+                Type acceptedCarTyps = ((ParameterizedType) shop.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+                if (acceptedCarTyps instanceof Class<?> && ((Class<?>) acceptedCarTyps).isInstance(vehicle)) {
+                    //Checks if the car is at the shop so it can be loaded if so it loads the car.
+                    if(isColliding(vehicle.getPosition(), shop.getPosition())){
+                        shop.load(vehicle);
+                        //listCars.removeVehicle(vehicle); TODO detta fakkar upp för listan uppdateras inte i drawpanel, Observer-pattern
+                        vehicle.getPosition().setPosition(shop.getPosition().getX(), shop.getPosition().getY()); //remove instead of locking position
+                        System.out.print(vehicle.getModelName() + " loaded");
+                    }
+                }
+            }
         }
     }
 
@@ -30,13 +44,11 @@ public class CollisionHandler {
         vehicle.stopEngine();
         vehicle.turnLeft();
         vehicle.turnLeft();
-        //TODO HEELL NO
         vehicle.getPosition().setPosition(
                 Math.max(0, Math.min(vehicle.getPosition().getX(), 800)),
                 Math.max(0, Math.min(vehicle.getPosition().getY(), 499)));
 
         vehicle.startEngine();
-        System.out.print(vehicle.getDirection());
     }
     //bestämmer när de klassas som collision
     private boolean isColliding(Position vehiclePos, Position workshopPos){

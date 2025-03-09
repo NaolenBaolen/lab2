@@ -19,10 +19,9 @@ public class DrawPanel extends JPanel{
     private ArrayList<BufferedImage> carImg = new ArrayList<>();//Storing the images
     private ArrayList<Vehicle> listCars;
 
-    private CarMechanic mechanic;
+    private ArrayList<BufferedImage> carMechanicImg = new ArrayList<>();
+    private ArrayList<CarMechanic> listCarMechanic;
 
-    BufferedImage volvoWorkshopImage;
-    //Point volvoWorkshopPoint = new Point(0,300);
 
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y) {
@@ -31,24 +30,19 @@ public class DrawPanel extends JPanel{
         this.setBackground(Color.green);
     }
 
-    public void setListCars(ArrayList<Vehicle> listCars){
+    public void setListViewCarsAndCarMechanic(ArrayList<Vehicle> listCars, ArrayList<CarMechanic> listCarMechanic){
         this.listCars = listCars;
+        this. listCarMechanic = listCarMechanic;
         addCarIMG();
-    }
-
-    public void setWorkshop(CarMechanic mechanic){  //bara ett test för potentiell förbättring?
-        this.mechanic = mechanic;
-        try{
-        volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
-        } catch (IOException ex){
-            ex.printStackTrace();
-        }
     }
 
     private void addCarIMG(){
         try {
             for(Vehicle car : listCars){
                 carImg.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + car.getModelName() + ".jpg")));
+            }
+            for(CarMechanic carMechanic : listCarMechanic) {
+                carMechanicImg.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + carMechanic.getShopName() + ".jpg")));
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -63,6 +57,8 @@ public class DrawPanel extends JPanel{
             Vehicle car = listCars.get(i);
             g.drawImage(carImg.get(i), (int) car.getPosition().getX(), (int) car.getPosition().getY(), null); // see javadoc for more info on the parameters
         }
-            g.drawImage(volvoWorkshopImage, (int) mechanic.getPosition().getX(), (int) mechanic.getPosition().getY(), null);
+        for(int j = 0; j< carMechanicImg.size(); j++) {
+            g.drawImage(carMechanicImg.get(j), (int) listCarMechanic.get(j).getPosition().getX(), (int) listCarMechanic.get(j).getPosition().getY(), null);
+        }
     }
 }
