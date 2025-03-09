@@ -80,8 +80,6 @@ public class CarController implements CarActionButtonListner{
                 if (outOfBounds(x, y)) {
                     collisionHandling(car);
                 }
-                //do better
-                frame.drawPanel.moveit(i, (int) Math.round(car.getPosition().getX()), (int) Math.round(car.getPosition().getY()));
                 // repaint() calls the paintComponent method of the panel
             }
             frame.drawPanel.repaint();
