@@ -24,6 +24,8 @@ public class DrawPanel extends JPanel implements Observer{
 
     public void update(){
         repaint();
+
+        //GET LISTCARS AND MECHANICS IN THIS METHOD
     }
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y) {
