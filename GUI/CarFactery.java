@@ -33,15 +33,13 @@ public class CarFactery implements ListCarsInmotion{
         vehicles.add(volvo);
     }
 
-    public Vehicle createSaab(){
+    public void createSaab(){
         Vehicle saab = new Saab95();
         vehicles.add(saab);
-        return saab;
     }
 
-    public Vehicle createScania(){
+    public void createScania(){
         Vehicle scania = new ScaniaV2();
         vehicles.add(scania);
-        return scania;
     }
 }
