@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+
 public class CarFactery implements ListCarsInmotion{
     private final ArrayList<Vehicle> vehicles = new ArrayList<>();
 

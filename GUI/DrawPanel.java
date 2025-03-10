@@ -13,7 +13,7 @@ import javax.swing.*;
 
 // This panel represents the animated part of the view with the car images.
 
-public class DrawPanel extends JPanel{
+public class DrawPanel extends JPanel implements Observer{
 
     //List that handels Images and list that makes the that have the cars inmotion
     private ArrayList<BufferedImage> carImg = new ArrayList<>();//Storing the images
@@ -22,7 +22,15 @@ public class DrawPanel extends JPanel{
     private ArrayList<BufferedImage> carMechanicImg = new ArrayList<>();
     private ActiveCarMechanics listCarMechanic;
 
+    private DrawDataProvider dataProvider;
 
+    public void update(){ //lista soma rgument
+        repaint();
+        listCars = dataProvider.getCars();
+        listCarMechanic = dataProvider.getMechanics();
+        addCarIMG();
+        //GET LISTCARS AND MECHANICS IN THIS METHOD
+    }
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y) {
         this.setDoubleBuffered(true);
