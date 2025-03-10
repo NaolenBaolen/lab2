@@ -13,7 +13,7 @@ import java.util.ArrayList;
 * modifying the model state and the updating the view.
  */
 
-public class CarController implements CarActionButtonListner, Observable{
+public class CarController implements CarActionButtonListner, Observable, DrawDataProvider  {
 
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
@@ -69,7 +69,7 @@ public class CarController implements CarActionButtonListner, Observable{
                 car.move(); //if car.getCurrentSpeed > 0 else continue; ????
                 collisionHandler.handleCollision(car);
             }
-            notifyObservers();
+            notifyObservers(); //skicakr in listorna
         }
     }
 
@@ -89,6 +89,17 @@ public class CarController implements CarActionButtonListner, Observable{
         for(Observer observer : observers){
             observer.update();
         }
+    }
+
+    //DataProvider
+    @Override
+    public ArrayList<Vehicle> getCars(){
+        return listCars.getListCarsInmotion();
+    }
+
+    @Override
+    public ArrayList<CarMechanic> getMechanics(){
+        return listCarMechaincs.getListOfCarMechanics();
     }
 
     // Call controls

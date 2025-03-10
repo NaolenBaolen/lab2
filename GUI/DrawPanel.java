@@ -22,9 +22,13 @@ public class DrawPanel extends JPanel implements Observer{
     private ArrayList<BufferedImage> carMechanicImg = new ArrayList<>();
     private ArrayList<CarMechanic> listCarMechanic;
 
-    public void update(){
-        repaint();
+//    private DrawDataProvider dataProvider;
 
+    public void update(){ //lista soma rgument
+        repaint();
+//        listCars = dataProvider.getCars();
+//        listCarMechanic = dataProvider.getMechanics();
+//        addCarIMG();
         //GET LISTCARS AND MECHANICS IN THIS METHOD
     }
     // Initializes the panel and reads the images
@@ -36,7 +40,7 @@ public class DrawPanel extends JPanel implements Observer{
 
     public void setListViewCarsAndCarMechanic(ArrayList<Vehicle> listCars, ArrayList<CarMechanic> listCarMechanic){
         this.listCars = listCars;
-        this. listCarMechanic = listCarMechanic;
+        this.listCarMechanic = listCarMechanic;
         addCarIMG();
     }
 
