@@ -25,11 +25,12 @@ public class DrawPanel extends JPanel implements Observer{
     private DrawDataProvider dataProvider;
 
     public void update(){ //lista soma rgument
-        repaint();
-        listCars = dataProvider.getCars();
-        listCarMechanic = dataProvider.getMechanics();
-        addCarIMG();
+
+//        listCars = dataProvider.getCars();
+//        listCarMechanic = dataProvider.getMechanics();
+//        addCarIMG();
         //GET LISTCARS AND MECHANICS IN THIS METHOD
+        repaint();
     }
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y) {

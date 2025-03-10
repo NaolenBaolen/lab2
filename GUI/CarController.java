@@ -5,6 +5,7 @@ import Vehicles.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 /*
@@ -13,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 * modifying the model state and the updating the view.
  */
 
-public class CarController implements CarActionButtonListner{
+public class CarController implements CarActionButtonListner, Observable{
 
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
@@ -28,7 +29,7 @@ public class CarController implements CarActionButtonListner{
     private ActiveCarMechanics listCarMechaincs;
     private CollisionHandler collisionHandler;
 
-
+    private ArrayList<Observer> observers = new ArrayList<>();
 
     //methods:
 
@@ -53,11 +54,14 @@ public class CarController implements CarActionButtonListner{
         cc.collisionHandler = new CollisionHandler(cc.listCarMechaincs);
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0");
+        cc.addObserver(cc.frame.drawPanel);
         cc.frame.setCarAction(cc);
         cc.frame.drawPanel.setListViewCarsAndCarMechanic(cc.listCars, cc.listCarMechaincs);
         // Start the timer
         cc.timer.start();
     }
+
+
 
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
@@ -68,9 +72,27 @@ public class CarController implements CarActionButtonListner{
                 car.move(); //if car.getCurrentSpeed > 0 else continue; ????
                 collisionHandler.handleCollision(car);
             }
-            frame.drawPanel.repaint();
+            notifyObservers();
         }
     }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for(Observer observer : observers){
+            observer.update();
+        }
+    }
+
 
     // Call controls
     //TODO in gas maybe if(car instance of truckBed) continue?? so we can gas all cars even if a truck has bed raised
