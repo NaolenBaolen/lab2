@@ -9,4 +9,6 @@ public interface CarActionButtonListner {
     void lowerBed();
     void startAll();
     void stopAll();
+    void addCar();
+    void removeCar();
 }

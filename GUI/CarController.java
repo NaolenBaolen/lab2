@@ -5,6 +5,7 @@ import Vehicles.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.ThreadLocalRandom;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -89,5 +90,8 @@ public class CarController implements CarActionButtonListner{
     public void startAll(){for (Vehicle car: listCars.getListCarsInmotion()){car.startEngine();}}
     @Override
     public void stopAll(){for(Vehicle car: listCars.getListCarsInmotion()){car.stopEngine();}}
-
+    @Override
+    public void addCar(){listCars.addVehicle();}
+    @Override
+    public void removeCar(){listCars.removeVehicle(listCars.getListCarsInmotion().get(ThreadLocalRandom.current().nextInt(listCars.getListCarsInmotion().size())));}
 }

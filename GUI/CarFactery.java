@@ -7,6 +7,7 @@ import Vehicles.Volvo240;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class CarFactery implements ListCarsInmotion{
     private final ArrayList<Vehicle> vehicles = new ArrayList<>();
@@ -17,13 +18,23 @@ public class CarFactery implements ListCarsInmotion{
     }
 
     @Override
-    public void addVehicle(Vehicle vehicle){
-        vehicles.add(vehicle);
+    public void addVehicle(){
+        if(vehicles.size() < 5) {//Only 9 cars allowed at the same time
+            createRandomVehicle(); //Add a random car after creating it
+        }
+        else{
+            System.out.println("Max cars in motion reached");
+        }
     }
 
     @Override
     public void removeVehicle(Vehicle vehicle){
-        vehicles.remove(vehicle);
+        if(!vehicles.isEmpty()){
+            vehicles.remove(vehicle);
+        }
+        else{
+            System.out.print("No cars to remove, all cars are removed");
+        }
     }
 
     //Factory methods for creating different vehicles
@@ -41,5 +52,14 @@ public class CarFactery implements ListCarsInmotion{
     public void createScania(){
         Vehicle scania = new ScaniaV2();
         vehicles.add(scania);
+    }
+
+    public void createRandomVehicle(){
+        List<Runnable> createMethods = List.of(
+                this::createVolvo,
+                this::createSaab,
+                this::createScania
+        );
+        createMethods.get(ThreadLocalRandom.current().nextInt(createMethods.size())).run();
     }
 }

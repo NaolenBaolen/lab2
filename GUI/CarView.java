@@ -46,6 +46,8 @@ public class CarView extends JFrame{
     private JButton lowerBedButton;
     private JButton startButton;
     private JButton stopButton;
+    private JButton addCarButton;
+    private JButton removeCarButton;
 
     // Constructor
     public CarView(String framename){
@@ -102,6 +104,8 @@ public class CarView extends JFrame{
         lowerBedButton = new JButton("Lower bed");
         startButton = new JButton("Start all cars");
         stopButton = new JButton("Stop all cars");
+        addCarButton = new JButton("Add car");
+        removeCarButton = new JButton("Remove car");
 
         //add buttons to control panel
         controlPanel.add(gasButton,0);
@@ -111,7 +115,12 @@ public class CarView extends JFrame{
         controlPanel.add(turboOffButton,4);
         controlPanel.add(lowerBedButton,5);
 
-        //Start and stop buttons
+        addCarButton.setBackground(new Color(138, 43, 226));
+        addCarButton.setPreferredSize(new Dimension(X/5-23,200));
+        this.add(addCarButton);
+        removeCarButton.setBackground(Color.ORANGE);
+        removeCarButton.setPreferredSize(new Dimension(X/5-23,200));
+        this.add(removeCarButton);
         startButton.setBackground(Color.blue);
         startButton.setForeground(Color.green);
         startButton.setPreferredSize(new Dimension(X/5-23,200));
@@ -136,6 +145,8 @@ public class CarView extends JFrame{
         lowerBedButton.addActionListener(e -> {if (carActions != null){carActions.lowerBed();}});
         startButton.addActionListener(e -> {if (carActions != null){carActions.startAll();}});
         stopButton.addActionListener(e -> {if (carActions != null){carActions.stopAll();}});
+        addCarButton.addActionListener(e -> {if(carActions != null){carActions.addCar();}});
+        removeCarButton.addActionListener(e-> {if(carActions != null){carActions.removeCar();}});
     }
 
     private void finalze(){

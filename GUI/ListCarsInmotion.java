@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ListCarsInmotion {
     List<Vehicle> getListCarsInmotion();
-    void addVehicle(Vehicle vehicle);
+    void addVehicle();
     void removeVehicle(Vehicle vehicle);
 }
