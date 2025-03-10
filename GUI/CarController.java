@@ -49,11 +49,11 @@ public class CarController implements CarActionButtonListner{
             cc.listCarMechaincs.getListOfCarMechanics().get(j).getPosition().setPosition(j*100, 300);
         }
 
-        cc.collisionHandler = new CollisionHandler(cc.listCarMechaincs.getListOfCarMechanics());
+        cc.collisionHandler = new CollisionHandler(cc.listCarMechaincs);
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0");
         cc.frame.setCarAction(cc);
-        cc.frame.drawPanel.setListViewCarsAndCarMechanic(cc.listCars.getListCarsInmotion(), cc.listCarMechaincs.getListOfCarMechanics());
+        cc.frame.drawPanel.setListViewCarsAndCarMechanic(cc.listCars, cc.listCarMechaincs);
         // Start the timer
         cc.timer.start();
     }

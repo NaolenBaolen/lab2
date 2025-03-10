@@ -4,12 +4,11 @@ import Vehicles.*;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 public class CollisionHandler {
-    private ArrayList<CarMechanic> carMechanics;
+    private ActiveCarMechanics carMechanics;
 
-    public CollisionHandler(ArrayList<CarMechanic> carMechanics){
+    public CollisionHandler(ActiveCarMechanics carMechanics){
         this.carMechanics = carMechanics;
     }
 
@@ -21,8 +20,8 @@ public class CollisionHandler {
 
     //Check if volvo is in proximity and loads it
     private void checkWorkshopCollision (Vehicle vehicle){
-        for(int i = 0; i< carMechanics.size(); i++) {
-            CarMechanic shop = carMechanics.get(i);
+        for(int i = 0; i< carMechanics.getListOfCarMechanics().size(); i++) {
+            CarMechanic shop = carMechanics.getListOfCarMechanics().get(i);
             //Looks into which car types can be loaded into the different shops
             if (shop.getClass().getGenericSuperclass() instanceof ParameterizedType) {
                 Type acceptedCarTyps = ((ParameterizedType) shop.getClass().getGenericSuperclass()).getActualTypeArguments()[0];

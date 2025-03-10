@@ -15,12 +15,12 @@ import javax.swing.*;
 
 public class DrawPanel extends JPanel{
 
-    // Just a single image, TODO: Generalize
+    //List that handels Images and list that makes the that have the cars inmotion
     private ArrayList<BufferedImage> carImg = new ArrayList<>();//Storing the images
-    private ArrayList<Vehicle> listCars;
+    private CarFactery listCars;
 
     private ArrayList<BufferedImage> carMechanicImg = new ArrayList<>();
-    private ArrayList<CarMechanic> listCarMechanic;
+    private ActiveCarMechanics listCarMechanic;
 
 
     // Initializes the panel and reads the images
@@ -30,18 +30,18 @@ public class DrawPanel extends JPanel{
         this.setBackground(Color.green);
     }
 
-    public void setListViewCarsAndCarMechanic(ArrayList<Vehicle> listCars, ArrayList<CarMechanic> listCarMechanic){
+    public void setListViewCarsAndCarMechanic(CarFactery listCars, ActiveCarMechanics listCarMechanic){
         this.listCars = listCars;
         this. listCarMechanic = listCarMechanic;
-        addCarIMG();
+        addIMG();
     }
 
-    private void addCarIMG(){
+    private void addIMG(){
         try {
-            for(Vehicle car : listCars){
+            for(Vehicle car : listCars.getListCarsInmotion()){
                 carImg.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + car.getModelName() + ".jpg")));
             }
-            for(CarMechanic carMechanic : listCarMechanic) {
+            for(CarMechanic carMechanic : listCarMechanic.getListOfCarMechanics()) {
                 carMechanicImg.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + carMechanic.getShopName() + ".jpg")));
             }
         } catch (IOException ex) {
@@ -54,11 +54,10 @@ public class DrawPanel extends JPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (int i = 0; i < carImg.size(); i++){
-            Vehicle car = listCars.get(i);
-            g.drawImage(carImg.get(i), (int) car.getPosition().getX(), (int) car.getPosition().getY(), null); // see javadoc for more info on the parameters
+            g.drawImage(carImg.get(i), (int) listCars.getListCarsInmotion().get(i).getPosition().getX(), (int) listCars.getListCarsInmotion().get(i).getPosition().getY(), null); // see javadoc for more info on the parameters
         }
         for(int j = 0; j< carMechanicImg.size(); j++) {
-            g.drawImage(carMechanicImg.get(j), (int) listCarMechanic.get(j).getPosition().getX(), (int) listCarMechanic.get(j).getPosition().getY(), null);
+            g.drawImage(carMechanicImg.get(j), (int) listCarMechanic.getListOfCarMechanics().get(j).getPosition().getX(), (int) listCarMechanic.getListOfCarMechanics().get(j).getPosition().getY(), null);
         }
     }
 }
