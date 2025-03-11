@@ -64,8 +64,9 @@ public class CarController implements CarActionButtonListner{
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for(Vehicle car : listCars.getListCarsInmotion()) {
-                car.move(); //if car.getCurrentSpeed > 0 else continue; ????
+            for(int i = listCars.getListCarsInmotion().size() -1 ; i >= 0 ; i-- ) {
+                Vehicle car = listCars.getListCarsInmotion().get(i);
+                car.move();
                 collisionHandler.handleCollision(car, listCarMechaincs, listCars);
             }
             listCars.uppdateObservers(listCars);//notifyObservers();

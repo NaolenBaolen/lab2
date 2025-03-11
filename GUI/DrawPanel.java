@@ -72,7 +72,8 @@ public class DrawPanel extends JPanel implements Observer{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (int i = 0; i < carImg.size(); i++){
-            g.drawImage(carImg.get(i), (int) listCars.getListCarsInmotion().get(i).getPosition().getX(), (int) listCars.getListCarsInmotion().get(i).getPosition().getY(), null); // see javadoc for more info on the parameters
+            BufferedImage carImage = carImg.get(i);
+            g.drawImage(carImage, (int) listCars.getListCarsInmotion().get(i).getPosition().getX(), (int) listCars.getListCarsInmotion().get(i).getPosition().getY(), null); // see javadoc for more info on the parameters
         }
         for(int j = 0; j< carMechanicImg.size(); j++) {
             g.drawImage(carMechanicImg.get(j), (int) listCarMechanic.getListOfCarMechanics().get(j).getPosition().getX(), (int) listCarMechanic.getListOfCarMechanics().get(j).getPosition().getY(), null);
