@@ -20,17 +20,13 @@ public class CarView extends JFrame{
     DrawPanel drawPanel;
     private JPanel controlPanel;
     private JPanel gasPanel;
-    //private JPanel brakePanel;
 
     //Labels
     private JLabel gasLabel;
-    //private JLabel brakeLabel;
 
     //Spinners
     private JSpinner gasBrakeSpinner;
-    //private JSpinner brakeSpinner;
     private int gasBrakeAmount = 0;
-    //private int brakeAmount = 0;
 
     //Buttons
     private JButton gasButton;
