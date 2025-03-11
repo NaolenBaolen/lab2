@@ -34,9 +34,6 @@ public class CarFactery implements ListCarsInmotion, Observable{
         if(!vehicles.isEmpty()){
             vehicles.remove(vehicle);
         }
-        else{
-            System.out.print("No cars to remove, all cars are removed");
-        }
     }
 
     //Factory methods for creating different vehicles
