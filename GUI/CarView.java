@@ -1,12 +1,7 @@
 package GUI;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -59,7 +54,6 @@ public class CarView extends JFrame{
     }
 
     // Sets everything in place and fits everything
-    // TODO: Take a good look and make sure you understand how these methods and components work
     private void initComponents(String title) {
         setupFrame(title);
         setupPanels();
@@ -80,7 +74,7 @@ public class CarView extends JFrame{
         //Gas panel
         gasLabel = new JLabel("Gas/brake amount");
         SpinnerModel spinnerModel = new SpinnerNumberModel(0, 0, 100 , 1);
-        gasBrakeSpinner = new JSpinner(spinnerModel); //TODO maybe add these in setup control instead... changes layout though
+        gasBrakeSpinner = new JSpinner(spinnerModel);
 
         gasPanel = new JPanel(new BorderLayout());
         gasPanel.add(gasLabel, BorderLayout.PAGE_START);

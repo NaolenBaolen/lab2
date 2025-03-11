@@ -5,14 +5,7 @@ import Vehicles.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
-
-/*
-* This class represents the Controller part in the MVC pattern.
-* It's responsibilities is to listen to the View and responds in a appropriate manner by
-* modifying the model state and the updating the view.
- */
 
 public class CarController implements CarActionButtonListner{
 
@@ -59,9 +52,6 @@ public class CarController implements CarActionButtonListner{
         cc.timer.start();
     }
 
-    /* Each step the TimerListener moves all the cars in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             for(int i = listCars.getListCarsInmotion().size() -1 ; i >= 0 ; i-- ) {
@@ -75,9 +65,10 @@ public class CarController implements CarActionButtonListner{
 
 
     // Call controls
-    //TODO in gas maybe if(car instance of truckBed) continue?? so we can gas all cars even if a truck has bed raised
     @Override
-    public void gas(int amount) {double gas = ((double) amount) / 100;for (Vehicle car : listCars.getListCarsInmotion()) {car.gas(gas);}}
+    public void gas(int amount) {double gas = ((double) amount) / 100;
+        for (Vehicle car : listCars.getListCarsInmotion()) {car.gas(gas);}
+    }
     @Override
     public void brake(int amount){double brake = ((double) amount) / 100;for (Vehicle car : listCars.getListCarsInmotion()){car.brake(brake);}}
     @Override

@@ -11,9 +11,8 @@ Refaktorieseringsplan
 
 4:  Flytta metoden outOfBounds till klassen TimerListner.
 
-5:  Dekomponera Vehicle genom att konstruera två klasser: Position och EngineAndSpeed.
-    Flytta över alla relevanta metoder från Vehicle till respektive klass samt initialisera statiska
-    variabler som hanterar instansieringen av klasserna (privat static Position position = new Position()).
+5:  Dekomponera Vehicle genom att konstruera: Position.
+    Flytta över alla relevanta metoder från Vehicle till klass samt initialisera
 
 6:  Skapa en interface Turbo som inkluderar turboON samt turboOff. Se till att Saab95 implementerar Turbo.
     Ändra i CarController (call controls) “instansof Saab95” till instansof Turbo.

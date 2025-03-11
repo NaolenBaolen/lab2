@@ -17,21 +17,10 @@ public class DrawPanel extends JPanel implements Observer{
 
     //List that handels Images and list that makes the that have the cars inmotion
     private ArrayList<BufferedImage> carImg = new ArrayList<>();//Storing the images
-    private CarFactery listCars;
-
     private ArrayList<BufferedImage> carMechanicImg = new ArrayList<>();
+    private CarFactery listCars;
     private ActiveCarMechanics listCarMechanic;
 
-    private DrawDataProvider dataProvider;
-
-    public void update(){ //lista soma rgument
-
-//        listCars = dataProvider.getCars();
-//        listCarMechanic = dataProvider.getMechanics();
-//        addCarIMG();
-        //GET LISTCARS AND MECHANICS IN THIS METHOD
-        repaint();
-    }
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y) {
         this.setDoubleBuffered(true);
@@ -39,20 +28,19 @@ public class DrawPanel extends JPanel implements Observer{
         this.setBackground(Color.green);
     }
 
-    public void setListViewCarsAndCarMechanic(CarFactery listCars, ActiveCarMechanics listCarMechanic){
-        this.listCars = listCars;
-        this. listCarMechanic = listCarMechanic;
-        addIMG(listCars, listCarMechanic);//Kan behövs flyttas på...
-    }
     @Override
     public void update(CarFactery cars){
-        //Change to the java function that checks the diffrence in list to it only does that instead of creating all new.
         carImg.clear();
         carMechanicImg.clear();
         addIMG(cars, listCarMechanic);
         repaint();
     }
 
+    public void setListViewCarsAndCarMechanic(CarFactery listCars, ActiveCarMechanics listCarMechanic){
+        this.listCars = listCars;
+        this. listCarMechanic = listCarMechanic;
+        addIMG(listCars, listCarMechanic);
+    }
 
     private void addIMG(CarFactery listCars, ActiveCarMechanics listCarMechanic){
         try {
