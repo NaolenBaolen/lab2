@@ -27,6 +27,7 @@ public class CarFactery implements ListCarsInmotion, Observable{
         else{
             System.out.println("Max cars in motion reached");
         }
+        uppdateObservers(this);
     }
 
     @Override
@@ -34,6 +35,7 @@ public class CarFactery implements ListCarsInmotion, Observable{
         if(!vehicles.isEmpty()){
             vehicles.remove(vehicle);
         }
+        uppdateObservers(this);
     }
 
     //Factory methods for creating different vehicles
