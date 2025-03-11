@@ -7,7 +7,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -18,7 +17,7 @@ public class DrawPanel extends JPanel implements Observer{
     //List that handels Images and list that makes the that have the cars inmotion
     private ArrayList<BufferedImage> carImg = new ArrayList<>();//Storing the images
     private ArrayList<BufferedImage> carMechanicImg = new ArrayList<>();
-    private CarFactery listCars;
+    private CarModel listCars;
     private ActiveCarMechanics listCarMechanic;
 
     // Initializes the panel and reads the images
@@ -29,20 +28,20 @@ public class DrawPanel extends JPanel implements Observer{
     }
 
     @Override
-    public void update(CarFactery cars){
+    public void update(CarModel cars){
         carImg.clear();
         carMechanicImg.clear();
         addIMG(cars, listCarMechanic);
         repaint();
     }
 
-    public void setListViewCarsAndCarMechanic(CarFactery listCars, ActiveCarMechanics listCarMechanic){
+    public void setListViewCarsAndCarMechanic(CarModel listCars, ActiveCarMechanics listCarMechanic){
         this.listCars = listCars;
         this. listCarMechanic = listCarMechanic;
         addIMG(listCars, listCarMechanic);
     }
 
-    private void addIMG(CarFactery listCars, ActiveCarMechanics listCarMechanic){
+    private void addIMG(CarModel listCars, ActiveCarMechanics listCarMechanic){
         try {
             for(Vehicle car : listCars.getListCarsInmotion()){
                 carImg.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + car.getModelName() + ".jpg")));

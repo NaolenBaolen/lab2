@@ -4,20 +4,19 @@ import Vehicles.*;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Iterator;
 
 public class CollisionHandler {
 
     public CollisionHandler(){}
 
     //checks and takes care of collision with boarder or workshop
-    public void handleCollision(Vehicle car, ActiveCarMechanics carMechanics, CarFactery listCars){
+    public void handleCollision(Vehicle car, ActiveCarMechanics carMechanics, CarModel listCars){
         checkWorkshopCollision(car, carMechanics, listCars);
         if (isOutOfBounds(car.getPosition())) handleBorderCollision(car);
     }
 
     //Check if volvo is in proximity and loads it
-    private void checkWorkshopCollision (Vehicle vehicle, ActiveCarMechanics carMechanics, CarFactery listCars){
+    private void checkWorkshopCollision (Vehicle vehicle, ActiveCarMechanics carMechanics, CarModel listCars){
         for(int i = 0; i< carMechanics.getListOfCarMechanics().size(); i++) {
             CarMechanic shop = carMechanics.getListOfCarMechanics().get(i);
             //Looks into which car types can be loaded into the different shops
@@ -27,8 +26,8 @@ public class CollisionHandler {
                     //Checks if the car is at the shop so it can be loaded if so it loads the car.
                     if(isColliding(vehicle.getPosition(), shop.getPosition())){
                         shop.load(vehicle);
-                        listCars.removeVehicle(vehicle);
-                        System.out.print(vehicle.getModelName() + " loaded");
+                        listCars.removeVehicleCollision(vehicle);
+                        System.out.print(vehicle.getModelName() + " loaded\n");
                     }
                 }
             }

@@ -5,7 +5,6 @@ import Vehicles.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class CarController implements CarActionButtonListner{
 
@@ -17,7 +16,7 @@ public class CarController implements CarActionButtonListner{
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    private CarFactery listCars;
+    private CarModel listCars;
     //Creates and handels carMechanics
     private ActiveCarMechanics listCarMechaincs;
     private CollisionHandler collisionHandler;
@@ -27,7 +26,7 @@ public class CarController implements CarActionButtonListner{
     public static void main(String[] args) {
         // Instance of this class
         CarController cc = new CarController();
-        cc.listCars = new CarFactery();
+        cc.listCars = new CarModel();
         cc.listCars.createVolvo();
         cc.listCars.createSaab();
         cc.listCars.createScania();
@@ -59,32 +58,30 @@ public class CarController implements CarActionButtonListner{
                 car.move();
                 collisionHandler.handleCollision(car, listCarMechaincs, listCars);
             }
-            listCars.uppdateObservers(listCars);//notifyObservers();
+            listCars.uppdateObservers(listCars);
         }
     }
 
 
     // Call controls
     @Override
-    public void gas(int amount) {double gas = ((double) amount) / 100;
-        for (Vehicle car : listCars.getListCarsInmotion()) {car.gas(gas);}
-    }
+    public void gas(int amount) {listCars.gas(amount);}
     @Override
-    public void brake(int amount){double brake = ((double) amount) / 100;for (Vehicle car : listCars.getListCarsInmotion()){car.brake(brake);}}
+    public void brake(int amount){listCars.brake(amount);}
     @Override
-    public void turboOn(){for (Vehicle car : listCars.getListCarsInmotion()){if(car instanceof Turbo){((Turbo)car).setTurboOn();}}}
+    public void turboOn(){listCars.turboOn();}
     @Override
-    public void turboOff(){for (Vehicle car : listCars.getListCarsInmotion()){if (car instanceof Turbo){((Turbo) car).setTurboOff();}}}
+    public void turboOff(){listCars.turboOff();}
     @Override
-    public void liftBed(){for (Vehicle car : listCars.getListCarsInmotion()){if (car instanceof truckBed){((truckBed)car).raiseBed();}}}
+    public void liftBed(){listCars.liftBed();}
     @Override
-    public void lowerBed(){for (Vehicle car : listCars.getListCarsInmotion()){if( car instanceof truckBed){((truckBed)car).lowerBed();}}}
+    public void lowerBed(){listCars.lowerBed();}
     @Override
-    public void startAll(){for (Vehicle car: listCars.getListCarsInmotion()){car.startEngine();}}
+    public void startAll(){listCars.startAll();}
     @Override
-    public void stopAll(){for(Vehicle car: listCars.getListCarsInmotion()){car.stopEngine();}}
+    public void stopAll(){listCars.stopAll();}
     @Override
     public void addCar(){listCars.addVehicle();}
     @Override
-    public void removeCar(){listCars.removeVehicle(listCars.getListCarsInmotion().get(ThreadLocalRandom.current().nextInt(listCars.getListCarsInmotion().size())));}
+    public void removeCar(){listCars.removeVehicle();}
 }

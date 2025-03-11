@@ -2,11 +2,11 @@ package Vehicles;
 
 import java.awt.*;
 
-public class ScaniaV2 extends Vehicle implements truckBed {
+public class Scania extends Vehicle implements truckBed {
     private  double bedAngle;
     private boolean bedRaised;
 
-    public ScaniaV2() {
+    public Scania() {
         super(2, 120, Color.black, "Scania", Weight.MEDIUM);
         this.bedAngle = 0;
         this.bedRaised = false;
