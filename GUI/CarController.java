@@ -49,7 +49,7 @@ public class CarController implements CarActionButtonListner{
             cc.listCarMechaincs.getListOfCarMechanics().get(j).getPosition().setPosition(j*100, 300);
         }
 
-        cc.collisionHandler = new CollisionHandler(cc.listCarMechaincs);
+        cc.collisionHandler = new CollisionHandler();
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0");
         cc.listCars.addObserver(cc.frame.drawPanel);
@@ -66,7 +66,7 @@ public class CarController implements CarActionButtonListner{
         public void actionPerformed(ActionEvent e) {
             for(Vehicle car : listCars.getListCarsInmotion()) {
                 car.move(); //if car.getCurrentSpeed > 0 else continue; ????
-                collisionHandler.handleCollision(car);
+                collisionHandler.handleCollision(car, listCarMechaincs);
             }
             listCars.uppdateObservers(listCars);//notifyObservers();
         }
