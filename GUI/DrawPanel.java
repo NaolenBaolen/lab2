@@ -42,10 +42,19 @@ public class DrawPanel extends JPanel implements Observer{
     public void setListViewCarsAndCarMechanic(CarFactery listCars, ActiveCarMechanics listCarMechanic){
         this.listCars = listCars;
         this. listCarMechanic = listCarMechanic;
-        addIMG();
+        addIMG(listCars, listCarMechanic);//Kan behövs flyttas på...
+    }
+    @Override
+    public void update(CarFactery cars){
+        //Change to the java function that checks the diffrence in list to it only does that instead of creating all new.
+        carImg.clear();
+        carMechanicImg.clear();
+        addIMG(cars, listCarMechanic);
+        repaint();
     }
 
-    private void addIMG(){
+
+    private void addIMG(CarFactery listCars, ActiveCarMechanics listCarMechanic){
         try {
             for(Vehicle car : listCars.getListCarsInmotion()){
                 carImg.add(ImageIO.read(DrawPanel.class.getResourceAsStream("pics/" + car.getModelName() + ".jpg")));

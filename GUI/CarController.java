@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 * modifying the model state and the updating the view.
  */
 
-public class CarController implements CarActionButtonListner, Observable{
+public class CarController implements CarActionButtonListner{
 
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
@@ -28,8 +28,6 @@ public class CarController implements CarActionButtonListner, Observable{
     //Creates and handels carMechanics
     private ActiveCarMechanics listCarMechaincs;
     private CollisionHandler collisionHandler;
-
-    private ArrayList<Observer> observers = new ArrayList<>();
 
     //methods:
 
@@ -54,14 +52,12 @@ public class CarController implements CarActionButtonListner, Observable{
         cc.collisionHandler = new CollisionHandler(cc.listCarMechaincs);
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0");
-        cc.addObserver(cc.frame.drawPanel);
+        cc.listCars.addObserver(cc.frame.drawPanel);
         cc.frame.setCarAction(cc);
         cc.frame.drawPanel.setListViewCarsAndCarMechanic(cc.listCars, cc.listCarMechaincs);
         // Start the timer
         cc.timer.start();
     }
-
-
 
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
@@ -72,24 +68,7 @@ public class CarController implements CarActionButtonListner, Observable{
                 car.move(); //if car.getCurrentSpeed > 0 else continue; ????
                 collisionHandler.handleCollision(car);
             }
-            notifyObservers();
-        }
-    }
-
-    @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(Observer observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for(Observer observer : observers){
-            observer.update();
+            listCars.uppdateObservers(listCars);//notifyObservers();
         }
     }
 

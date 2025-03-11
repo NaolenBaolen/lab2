@@ -10,8 +10,9 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-public class CarFactery implements ListCarsInmotion{
+public class CarFactery implements ListCarsInmotion, Observable{
     private final ArrayList<Vehicle> vehicles = new ArrayList<>();
+    private List<Observer> observers = new ArrayList<>();
 
     @Override
     public ArrayList<Vehicle> getListCarsInmotion(){
@@ -62,5 +63,20 @@ public class CarFactery implements ListCarsInmotion{
                 this::createScania
         );
         createMethods.get(ThreadLocalRandom.current().nextInt(createMethods.size())).run();
+    }
+
+    @Override
+    public void addObserver(Observer observer){
+        observers.add(observer);
+    }
+    @Override
+    public void removeObserver(Observer observer){
+        observers.remove(observer);
+    }
+    @Override
+    public void uppdateObservers(CarFactery listCars){
+        for(Observer observer : observers){
+            observer.update(listCars);
+        }
     }
 }
