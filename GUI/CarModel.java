@@ -44,9 +44,7 @@ public class CarModel implements ListCarsInmotion, Observable{
     }
 
     public void stopAll(){
-        for(Vehicle vehicle: vehicles){
-            vehicle.stopEngine();
-        }
+        vehicles.forEach(Vehicle::stopEngine);
     }
 
     @Override
